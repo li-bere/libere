@@ -1,0 +1,77 @@
+<div class="ion-margin-top">
+  <ion-row *ngIf="isEditable" class="ion-align-items-center">
+    <ion-col class="col-11 ion-no-padding">
+      <ion-label stacked>{{"IMAGE_GALERY_ADD_PICTURES" | translate}}</ion-label>
+    </ion-col>
+    <ion-col class="col-1 ion-no-padding ion-text-right">
+      <ion-button
+        fill="clear"
+        class="ion-no-margin"
+        *ngIf="
+          imageList.length > 0
+        "
+        (click)="selectImagesForDelete()"
+      >
+        <ion-icon ios="trash-outline" md="trash-sharp"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" class="ion-no-margin" (click)="addImages()">
+        <ion-icon ios="add-circle-outline" md="add-circle-sharp"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row
+    *ngIf="imageSelection"
+    class="ion-padding-top ion-align-items-center"
+  >
+    <ion-col col-3 class="ion-no-padding ion-text-left">
+      <ion-button
+        fill="clear"
+        class="ion-no-margin"
+        (click)="resetSelectedImages()"
+      >
+        <ion-icon ios="close-outline" md="close-sharp"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col class="col-6 ion-no-padding ion-text-center">
+      {{ selectedImages.length }} Selected
+    </ion-col>
+    <ion-col class="col-3 ion-no-padding ion-text-right">
+      <ion-button
+        fill="clear"
+        class="ion-no-margin"
+        (click)="deleteImages()"
+      >
+        <ion-icon ios="checkmark-outline" md="checkmark-sharp"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-bottom">
+    <ion-col class="col-12 ion-text-left ion-no-padding">
+      <ion-grid *ngIf="imageList.length > 0">
+        <ion-row>
+          <ion-col size="6"
+            *ngFor="let image of imageList; let idx = index">
+            <img
+              class="image-container"
+              src="{{image.src}}"
+              (click)="imageClicked(image, idx)"
+            />
+            <div
+              *ngIf="image.isSelected"
+              class="overlay"
+              (click)="imageClicked(image, idx)"
+            >
+              <ion-icon
+                ios="checkmark-circle-outline"
+                md="checkmark-circle-sharp"
+                color="secondary"
+              ></ion-icon>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-col>
+  </ion-row>
+</div>

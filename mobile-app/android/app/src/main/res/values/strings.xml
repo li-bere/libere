@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">libere</string>
+    <string name="title_activity_main">libere</string>
+    <string name="package_name">com.libere.libere</string>
+    <string name="custom_url_scheme">com.libere.libere</string>
+    <string name="fb_app_id">875648606294657</string>
+    <string name="fb_app_name">libere</string>
+    <string name="facebook_app_id">875648606294657</string>
+    <string name="fb_login_protocol_scheme">fb286748349761780</string>
+</resources>

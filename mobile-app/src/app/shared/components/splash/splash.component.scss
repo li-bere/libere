@@ -1,0 +1,13 @@
+.container{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.element {
+    img {
+        max-width: 150px;
+    }
+    -webkit-animation:scale-up-center 2s cubic-bezier(.39,.575,.565,1.000) both;animation:scale-up-center 2s cubic-bezier(.39,.575,.565,1.000) both
+}
+@-webkit-keyframes element{0%{-webkit-transform:scale(.5);transform:scale(.5)}100%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes scale-up-center{0%{-webkit-transform:scale(.5);transform:scale(.5)}100%{-webkit-transform:scale(1);transform:scale(1)}}

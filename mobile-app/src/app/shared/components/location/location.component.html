@@ -1,0 +1,78 @@
+<div [formGroup]="form">
+  <ion-label stacked>{{"PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_ADDRESS_LABEL" | translate}}</ion-label>
+ <p><sub>{{"PAGE_ADD_SHOP_LOCATION" | translate}}</sub></p> 
+  <div formGroupName="address">
+    <div class="ion-text-center ion-margin-bottom map-wrapper">
+      <app-spinner *ngIf="loading"></app-spinner>
+      <div #map id="map" class="map" (click)="navigateToMap()"></div>
+    </div>
+
+    <ion-item>
+      <ion-icon ios="location-outline" md="location" slot="start" color="primary"></ion-icon>
+      <ion-input type="text" placeholder="{{'PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_LOCATION_PLACEHOLDER' | translate}}" formControlName="location"></ion-input>
+    </ion-item>
+
+    <p
+      ion-text
+      color="danger"
+      class="error-text"
+      *ngIf="
+        location.hasError('required') &&
+        location.touched
+      "
+    >
+     {{"PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_ERROR" | translate}}
+    </p>
+
+    <ion-item>
+      <ion-icon ios="location-outline" md="location" slot="start" color="primary"></ion-icon>
+      <ion-input type="text" placeholder="{{'PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_CITY_PLACEHOLDER' | translate}}" formControlName="city"></ion-input>
+    </ion-item>
+
+    <p
+      ion-text
+      color="danger"
+      class="error-text"
+      *ngIf="
+        city.hasError('required') &&
+        city.touched
+      "
+    >
+    {{"PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_ERROR" | translate}}
+    </p>
+
+    <ion-item>
+      <ion-icon ios="location-outline" md="location" slot="start" color="primary"></ion-icon>
+      <ion-input type="text" placeholder="{{'PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_STATE_PLACEHOLDER' | translate}}" formControlName="state"></ion-input>
+    </ion-item>
+
+    <p
+      ion-text
+      color="danger"
+      class="error-text"
+      *ngIf="
+        state.hasError('required') &&
+        state.touched
+      "
+    >
+    {{"PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_ERROR" | translate}}
+    </p>
+
+    <ion-item>
+      <ion-icon ios="location-outline" md="location" slot="start" color="primary"></ion-icon>
+      <ion-input type="text" placeholder="{{'PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_ZIP_PLACEHOLDER' | translate}}" formControlName="zip"></ion-input>
+    </ion-item>
+
+    <p
+      ion-text
+      color="danger"
+      class="error-text"
+      *ngIf="
+        zip.hasError('required') &&
+        zip.touched
+      "
+    >
+    {{"PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_ERROR" | translate}}
+    </p>
+  </div>
+</div>

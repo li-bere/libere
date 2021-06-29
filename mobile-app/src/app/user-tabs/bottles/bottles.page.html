@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <!-- <ion-back-button></ion-back-button> -->
+      <ion-buttons>
+        <ion-button [routerLink]="['/user-tabs/home']">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-buttons>
+    <ion-title>{{'PAGE_USER_BOTTLES_TITLE' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <p class="ion-text-center" *ngIf="bottles && bottles.length === 0">{{'PAGE_USER_BOTTLES_NOT_AVAILABLE' | translate}}</p>
+  <ion-card
+    class="ion-margin-bottom"
+    *ngFor="let bottle of bottles; let idx = index"
+  >
+    <ion-card-content (click)="botles(bottle.serial)">
+      <div class="content">
+        <div class="content-item"> {{idx + 1}} </div>
+        <div class="content-item border-left">
+          <p class="ion-no-margin"><sub>{{'PAGE_USER_BOTTLES_SERIAL_LABEL' | translate}}</sub></p>
+          <p class="ion-no-margin">{{bottle.serial}}</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/user-tabs/bottles/add']" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

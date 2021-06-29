@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{"MODEL_USER_SIDEBAR_PROFILE_LABEL" | translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-text-center content-header" *ngIf="user">
+    <div class="ion-margin-bottom img-profile">
+      <ion-avatar>
+        <img
+        class="ion-margin-bottom imggg"
+        [src]="user.displayPhoto"
+        *ngIf="user.displayPhoto"
+      />
+      <img
+        class="ion-margin-bottom imggg"
+        src="/assets/img/profile-image-placeholder.png"
+        *ngIf="!user.displayPhoto"
+      />
+      </ion-avatar>
+     
+    </div>
+    <p color="primary"
+    class="ion-no-margin ion-margin-bottom"
+    *ngIf="user.username !== '' || user.username !== ''"
+  >
+    {{ user.username }} 
+    
+  </p>
+
+  </div>
+
+<div class="body" *ngIf="user">
+  <ion-card class="ion-margin-bottom">
+
+      <ion-card-content>
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="person-outline"
+              md="person"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{"PAGE_USER_PROFILE_FIRST_NAME_PLACEHOLDER" | translate}}</ion-label>
+            {{ user.firstName }}
+          </ion-item>
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="at-outline"
+              md="at"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{"PAGE_USER_PROFILE_USER_NAME_PLACEHOLDER" | translate}}</ion-label>
+            {{ user.username }}
+          </ion-item>
+
+          <!-- <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="home-outline"
+              md="home"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{"PAGE_USER_PROFILE_USER_ADDRESS_PLACEHOLDER" | translate}}</ion-label>
+            {{ user.address }} 
+          </ion-item> -->
+
+          <!-- <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="call-outline"
+              md="call"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{"PAGE_USER_PROFILE_USER_PHONE_NUMBER" | translate}}</ion-label>
+            {{ user.phone.internationalNumber }}
+          </ion-item> -->
+        </ion-list>
+      </ion-card-content>
+  </ion-card>
+</div>
+
+</ion-content>

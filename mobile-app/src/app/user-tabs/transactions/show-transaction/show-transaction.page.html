@@ -1,0 +1,26 @@
+
+  <ion-toolbar>
+    <ion-title>{{"PAGE_TRANSACTION_VIEW" | translate}}</ion-title>
+    <ion-buttons slot="end">
+			<ion-button (click)="closeModal()">
+				<ion-icon name="close"></ion-icon>
+      </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Date</ion-label>
+      {{ transactionData.createdAt.seconds | date:'medium' }}
+    </ion-item>
+    <ion-item>{{ transactionData.amount }}</ion-item>
+    <ion-item>{{ transactionData.shopId}}</ion-item>
+    <ion-item>{{ transactionData.type }}</ion-item>
+    <ion-item>{{ transactionData.status }}</ion-item>
+  </ion-list>
+
+
+
+ </ion-content>

@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Shops</ion-title>
+    <ion-buttons slot="end">
+      <app-spinner *ngIf="loading"></app-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p class="ion-text-center" *ngIf="shops && shops.length === 0">{{"PAGE_VIEW_SHOPS_NO_SHOPS" | translate}}</p>
+  <div class="all-shops">
+    <ion-card [style.border-right-color]="shop.color"class="ion-margin-bottom"  *ngFor="let shop of shops" [routerLink]="['/shopkeeper-tabs/shops/view', shop.id]">
+      <!-- <app-location-view [lat]="shop.address.latLng.lat" [lng]="shop.address.latLng.lng"></app-location-view> -->
+      <!-- <ion-icon name="water"></ion-icon> -->
+      <ion-card-content>
+        <ion-card-title>
+          <ion-item lines="none" color="none">
+            <ion-avatar>
+              <img *ngIf="shop.shopDisplayPhoto" src="{{ shop.shopDisplayPhoto }}">
+              <img *ngIf="!shop.shopDisplayPhoto" src="/assets/img/icon/marker-reseller.png">
+            </ion-avatar>
+            <ion-label>
+              <h2>{{shop.name}}</h2>
+              <p>@{{shop.shopId}}</p>
+            </ion-label>
+            <ion-icon *ngIf="shop.isFountain" name="water" slot="end" color="primary"></ion-icon>
+            <ion-icon *ngIf="!shop.isFountain" name="water" slot="end"></ion-icon>
+            <!-- <ion-buttons>
+              <ion-button (click)="presentModal(shop.sid)">
+                <ion-icon name="qr-code-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons> -->
+            
+            <ion-text slot="end" color="primary" >
+              <p *ngIf="shop.refills !== undefined">{{"PAGE_VIEW_SHOPS_REFILLS" | translate}} {{ shop.refills }}</p>
+              <p *ngIf="shop.refills === undefined">{{"PAGE_VIEW_SHOPS_REFILLS" | translate}} 0</p>
+              <p>LiCoin {{ shop.credit }}</p>
+              </ion-text>
+          </ion-item>
+          </ion-card-title>
+        
+      </ion-card-content>
+    </ion-card>
+  </div>
+  
+
+  <ion-fab horizontal="end" slot="fixed">
+    <ion-fab-button (click)="gotoAddShop()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

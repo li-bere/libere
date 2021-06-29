@@ -1,0 +1,377 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Shop Ranking</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-segment [(ngModel)]="type"  (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="Daily">Daily </ion-segment-button>
+      <ion-segment-button value="Monthly"> Monthly </ion-segment-button> 
+      <ion-segment-button value="Total">Total </ion-segment-button>    
+    </ion-segment>
+    <div [ngSwitch]="type">
+      <ion-list *ngSwitchCase="'Daily'">
+        <div class="ranking-head">
+          <div class="rank">Rank</div>
+          <div class="name">Name</div>
+          <div class="co2-rank">CO2</div>
+          <div class="pla-rank">PLA</div>
+        </div>
+        <!-- <ion-card class="ion-margin-left" *ngFor="let rank of daily; let idx = index" > -->
+          <ion-item *ngFor="let rank of daily; let idx = index">
+          <!-- <ion-card-content> -->
+            <!-- <ion-item lines="none" class="refill">
+              <div class="content-item">{{idx + 1}}  </div>
+              <ion-avatar class="ion-margin-right" >
+                <ion-img
+                  [src]="rank.profilePic"
+                  *ngIf="rank && rank.profilePic"
+                ></ion-img>
+                <img
+                  src="/assets/img/profile-image-placeholder.png"
+                  alt="Photo"
+                  *ngIf="rank && !rank.profilePic"
+                />
+              </ion-avatar>
+              <ion-label>
+                <h2
+                  *ngIf="rank && (rank.firstName !== '' || rank.lastName !== '')"
+                >
+                  {{ rank.firstName }} {{ rank.lastName }}
+                </h2>
+                <h2 *ngIf="rank && rank.firstName === '' && rank.lastName === ''">
+                  Full Name
+                </h2>
+                <p>
+                  <ion-text color="primary" *ngIf="rank"
+                    >@{{rank.username}}</ion-text
+                  >
+                </p>
+              </ion-label>
+            
+              <ion-label>
+                <h6 class="ion-margin-left">
+                  <ion-text  class="ion-text-capitalize" 
+                  >{{rank.dailyco2}} </ion-text
+                >
+                </h6>
+              </ion-label>
+              <ion-label>
+                <h6 class="ion-margin-left">
+                  <ion-text  class="ion-text-capitalize" 
+                  >{{rank.dailypla2}} </ion-text
+                >
+                </h6>
+              </ion-label>
+            </ion-item> -->
+            <div class="ranking-data">
+              <div class="rank-index">
+                {{idx + 1}}
+              </div>
+              <div class="rank-img">
+                <img [src]="rank.profilePic" *ngIf="rank && rank.profilePic">
+                <img
+                  src="/assets/img/profile-image-placeholder.png"
+                  alt="Photo"
+                  *ngIf="rank && !rank.profilePic"
+                />
+              </div>
+              <div class="rank-user-name">
+                <ion-label>
+                  <h2 *ngIf="rank && (rank.name !== '' )">
+                    {{ rank.name }}
+                  </h2>
+                  <h2 *ngIf="rank && rank.name === ''">
+                    Full Name
+                  </h2>
+                  <p>
+                    <ion-text color="primary" *ngIf="rank"
+                      >@{{rank.shopId}}</ion-text
+                    >
+                  </p>
+                </ion-label>
+              </div>
+              <div class="rank-co2">
+                {{rank.dailyco2}} 
+              </div>
+              <div class="rank-plastic">
+                {{rank.dailypla2}} 
+              </div>
+            </div>
+          <!-- </ion-card-content> -->
+        <!-- </ion-card> -->
+      </ion-item>
+        </ion-list>
+
+ 
+          <ion-list *ngSwitchCase="'Monthly'">
+            <!-- <ion-card *ngFor="let rank of monthly; let idx = index" >
+              <ion-card-content>
+                <div class="ranking-data">
+                  <div class="rank-index">
+                    {{idx + 1}}
+                  </div>
+                  <div class="rank-img">
+                    <img [src]="rank.profilePic" *ngIf="rank && rank.profilePic">
+                    <img
+                      src="/assets/img/profile-image-placeholder.png"
+                      alt="Photo"
+                      *ngIf="rank && !rank.profilePic"
+                    />
+                  </div>
+                  <div class="rank-user-name">
+                    <ion-label>
+                      <h2 *ngIf="rank && (rank.firstName !== '' || rank.lastName !== '')">
+                        {{ rank.firstName }} {{ rank.lastName }}
+                      </h2>
+                      <h2 *ngIf="rank && rank.firstName === '' && rank.lastName === ''">
+                        Full Name
+                      </h2>
+                      <p>
+                        <ion-text color="primary" *ngIf="rank"
+                          >@{{rank.username}}</ion-text
+                        >
+                      </p>
+                    </ion-label>
+                  </div>
+                  <div class="rank-co2">
+                    {{rank.dailyco2}} CO2
+                  </div>
+                  <div class="rank-plastic">
+                    {{rank.dailypla2}} PLA
+                  </div>
+                </div>
+              </ion-card-content>
+            </ion-card> -->
+            <div class="ranking-head">
+              <div class="rank">Rank</div>
+              <div class="name">Name</div>
+              <div class="co2-rank">CO2</div>
+              <div class="pla-rank">PLA</div>
+            </div>
+            <!-- <ion-card class="ion-margin-left" *ngFor="let rank of daily; let idx = index" > -->
+              <ion-item *ngFor="let rank of monthly; let idx = index">
+              <!-- <ion-card-content> -->
+                <!-- <ion-item lines="none" class="refill">
+                  <div class="content-item">{{idx + 1}}  </div>
+                  <ion-avatar class="ion-margin-right" >
+                    <ion-img
+                      [src]="rank.profilePic"
+                      *ngIf="rank && rank.profilePic"
+                    ></ion-img>
+                    <img
+                      src="/assets/img/profile-image-placeholder.png"
+                      alt="Photo"
+                      *ngIf="rank && !rank.profilePic"
+                    />
+                  </ion-avatar>
+                  <ion-label>
+                    <h2
+                      *ngIf="rank && (rank.firstName !== '' || rank.lastName !== '')"
+                    >
+                      {{ rank.firstName }} {{ rank.lastName }}
+                    </h2>
+                    <h2 *ngIf="rank && rank.firstName === '' && rank.lastName === ''">
+                      Full Name
+                    </h2>
+                    <p>
+                      <ion-text color="primary" *ngIf="rank"
+                        >@{{rank.username}}</ion-text
+                      >
+                    </p>
+                  </ion-label>
+                
+                  <ion-label>
+                    <h6 class="ion-margin-left">
+                      <ion-text  class="ion-text-capitalize" 
+                      >{{rank.dailyco2}} </ion-text
+                    >
+                    </h6>
+                  </ion-label>
+                  <ion-label>
+                    <h6 class="ion-margin-left">
+                      <ion-text  class="ion-text-capitalize" 
+                      >{{rank.dailypla2}} </ion-text
+                    >
+                    </h6>
+                  </ion-label>
+                </ion-item> -->
+                <div class="ranking-data">
+                  <div class="rank-index">
+                    {{idx + 1}}
+                  </div>
+                  <div class="rank-img">
+                    <img [src]="rank.profilePic" *ngIf="rank && rank.profilePic">
+                    <img
+                      src="/assets/img/profile-image-placeholder.png"
+                      alt="Photo"
+                      *ngIf="rank && !rank.profilePic"
+                    />
+                  </div>
+                  <div class="rank-user-name">
+                    <ion-label>
+                      <h2 *ngIf="rank && (rank.name !== '' )">
+                        {{ rank.name }}
+                      </h2>
+                      <h2 *ngIf="rank && rank.name === ''">
+                        Full Name
+                      </h2>
+                      <p>
+                        <ion-text color="primary" *ngIf="rank"
+                          >@{{rank.shopId}}</ion-text
+                        >
+                      </p>
+                    </ion-label>
+                  </div>
+                  <div class="rank-co2">
+                    {{rank.monthlyco2}} 
+                  </div>
+                  <div class="rank-plastic">
+                    {{rank.monthlypla2}} 
+                  </div>
+                </div>
+              <!-- </ion-card-content> -->
+            <!-- </ion-card> -->
+          </ion-item>  
+          </ion-list>
+
+
+            <ion-list *ngSwitchCase="'Total'">
+              <!-- <ion-card *ngFor="let rank of totally; let idx = index" >
+                <ion-card-content>
+                  <div class="ranking-data">
+                    <div class="rank-index">
+                      {{idx + 1}}
+                    </div>
+                    <div class="rank-img">
+                      <img [src]="rank.profilePic" *ngIf="rank && rank.profilePic">
+                      <img
+                        src="/assets/img/profile-image-placeholder.png"
+                        alt="Photo"
+                        *ngIf="rank && !rank.profilePic"
+                      />
+                    </div>
+                    <div class="rank-user-name">
+                      <ion-label>
+                        <h2 *ngIf="rank && (rank.firstName !== '' || rank.lastName !== '')">
+                          {{ rank.firstName }} {{ rank.lastName }}
+                        </h2>
+                        <h2 *ngIf="rank && rank.firstName === '' && rank.lastName === ''">
+                          Full Name
+                        </h2>
+                        <p>
+                          <ion-text color="primary" *ngIf="rank"
+                            >@{{rank.username}}</ion-text
+                          >
+                        </p>
+                      </ion-label>
+                    </div>
+                    <div class="rank-co2">
+                      {{rank.dailyco2}} CO2
+                    </div>
+                    <div class="rank-plastic">
+                      {{rank.dailypla2}} PLA
+                    </div>
+                  </div>
+                </ion-card-content>
+              </ion-card> -->
+              <div class="ranking-head">
+                <div class="rank">Rank</div>
+                <div class="name">Name</div>
+                <div class="co2-rank">CO2</div>
+                <div class="pla-rank">PLA</div>
+              </div>
+              <!-- <ion-card class="ion-margin-left" *ngFor="let rank of daily; let idx = index" > -->
+                <ion-item *ngFor="let rank of total; let idx = index">
+                <!-- <ion-card-content> -->
+                  <!-- <ion-item lines="none" class="refill">
+                    <div class="content-item">{{idx + 1}}  </div>
+                    <ion-avatar class="ion-margin-right" >
+                      <ion-img
+                        [src]="rank.profilePic"
+                        *ngIf="rank && rank.profilePic"
+                      ></ion-img>
+                      <img
+                        src="/assets/img/profile-image-placeholder.png"
+                        alt="Photo"
+                        *ngIf="rank && !rank.profilePic"
+                      />
+                    </ion-avatar>
+                    <ion-label>
+                      <h2
+                        *ngIf="rank && (rank.firstName !== '' || rank.lastName !== '')"
+                      >
+                        {{ rank.firstName }} {{ rank.lastName }}
+                      </h2>
+                      <h2 *ngIf="rank && rank.firstName === '' && rank.lastName === ''">
+                        Full Name
+                      </h2>
+                      <p>
+                        <ion-text color="primary" *ngIf="rank"
+                          >@{{rank.username}}</ion-text
+                        >
+                      </p>
+                    </ion-label>
+                  
+                    <ion-label>
+                      <h6 class="ion-margin-left">
+                        <ion-text  class="ion-text-capitalize" 
+                        >{{rank.dailyco2}} </ion-text
+                      >
+                      </h6>
+                    </ion-label>
+                    <ion-label>
+                      <h6 class="ion-margin-left">
+                        <ion-text  class="ion-text-capitalize" 
+                        >{{rank.dailypla2}} </ion-text
+                      >
+                      </h6>
+                    </ion-label>
+                  </ion-item> -->
+                  <div class="ranking-data">
+                    <div class="rank-index">
+                      {{idx + 1}}
+                    </div>
+                    <div class="rank-img">
+                      <img [src]="rank.profilePic" *ngIf="rank && rank.profilePic">
+                      <img
+                        src="/assets/img/profile-image-placeholder.png"
+                        alt="Photo"
+                        *ngIf="rank && !rank.profilePic"
+                      />
+                    </div>
+                    <div class="rank-user-name">
+                      <ion-label>
+                        <h2 *ngIf="rank && (rank.name !== '' )">
+                          {{ rank.name }}
+                        </h2>
+                        <h2 *ngIf="rank && rank.name === ''">
+                          Full Name
+                        </h2>
+                        <p>
+                          <ion-text color="primary" *ngIf="rank"
+                            >@{{rank.shopId}}</ion-text
+                          >
+                        </p>
+                      </ion-label>
+                    </div>
+                    <div class="rank-co2">
+                      {{rank.totalco2}} 
+                    </div>
+                    <div class="rank-plastic">
+                      {{rank.totalpla2}} 
+                    </div>
+                  </div>
+                <!-- </ion-card-content> -->
+              <!-- </ion-card> -->
+            </ion-item>  
+            </ion-list>
+    
+        </div>
+
+  
+</ion-content>

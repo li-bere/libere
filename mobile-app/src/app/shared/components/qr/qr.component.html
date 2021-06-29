@@ -1,0 +1,34 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-text-center">
+  <ngx-qrcode
+  [value]="qrData"
+  [elementType]="qrCodeOptions.elementType"
+  [scale]="qrCodeOptions.scale"
+  #canvas
+  id="canvas"
+  *ngIf="qrData"
+>
+</ngx-qrcode>
+<ion-button
+          expand="block"
+          color="secondary"
+          class="ion-margin-top"
+          [disabled]="qrDownloadBtnDisabled"
+          (click)="downloadQRCode()"
+        >
+          <ion-icon
+            md="cloud-download"
+            ios="cloud-download-outline"
+            class="ion-margin-end"
+          ></ion-icon>
+          Download Your Code
+</ion-button>
+</ion-content>

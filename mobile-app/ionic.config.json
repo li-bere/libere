@@ -1,0 +1,7 @@
+{
+  "name": "libere",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

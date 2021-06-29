@@ -1,0 +1,531 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{'PAGE_USER_PROFILE_TITLE' | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/settings']"
+        ><ion-icon
+          slot="icon-only"
+          ios="settings-outline"
+          md="settings"
+        ></ion-icon
+      ></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-text-center content-header" *ngIf="userProfile">
+    <div class="ion-margin-bottom img-profile">
+      <img
+        class="ion-margin-bottom"
+        [src]="userProfile.displayPhoto"
+        (click)="viewImage(userProfile.displayPhoto)"
+        *ngIf="userProfile.displayPhoto"
+      />
+      <img
+        class="ion-margin-bottom"
+        src="/assets/img/profile-image-placeholder.png"
+        *ngIf="!userProfile.displayPhoto"
+      />
+      <app-spinner *ngIf="photoLoading"></app-spinner>
+      <ion-fab-button color="light" (click)="presentActionSheet()"
+        ><ion-icon ios="camera-outline" md="camera"></ion-icon
+      ></ion-fab-button>
+    </div>
+    <p
+      class="ion-no-margin ion-margin-bottom"
+      *ngIf="userProfile.firstName !== '' || userProfile.lastName !== ''"
+    >
+      {{ userProfile.firstName }} {{ userProfile.lastName }}
+    </p>
+    <p
+      class="ion-no-margin ion-margin-bottom"
+      *ngIf="userProfile.firstName === '' && userProfile.lastName === ''"
+    >
+      {{'PAGE_USER_PROFILE_FULL_NAME_LABEL' | translate}}
+    </p>
+  </div>
+
+
+
+<div *ngIf="emailVerified">
+  <div class="ion-margin-bottom info" *ngIf="userProfile">
+    <a class="ion-padding-end" [routerLink]="['/user-tabs/transactions']">
+      <ion-icon ios="cash-outline" md="cash" color="primary"></ion-icon>
+      <p class="ion-no-margin">
+        <ion-text color="medium" *ngIf="userProfile.credit"
+          >{{userProfile.credit}} {{'PAGE_USER_PROFILE_CREDIT' | translate}}<span *ngIf="userProfile.credit > 1"
+            ></span
+          ></ion-text
+        >
+        <ion-text color="medium" *ngIf="!userProfile.credit"
+          >0 {{'PAGE_USER_PROFILE_CREDIT' | translate}}</ion-text
+        >
+      </p>
+    </a>
+    <a
+      [routerLink]="['/user-tabs/bottles']"
+      class="ion-padding-start ion-padding-end"
+    >
+      <ion-icon ios="wine-outline" md="wine-outline" color="primary"></ion-icon>
+      <p class="ion-no-margin">
+        <ion-text color="medium" *ngIf="userProfile.bottles"
+          >{{userProfile.bottles}} {{'PAGE_USER_PROFILE_Bottle' | translate}}<span *ngIf="userProfile.bottles > 1"
+            >{{"PAGE_USER_PROFILE_REFILLS" | translate}}</span
+          ></ion-text
+        >
+        <ion-text color="medium" *ngIf="!userProfile.bottles"
+          >0 {{'PAGE_USER_PROFILE_Bottle' | translate}}</ion-text
+        >
+      </p>
+    </a>
+    <a
+      class="ion-padding-start"
+      [routerLink]="['/user-tabs/transactions']"
+      [state]="{ type: 'refill', reason: 'refill' }"
+    >
+      <ion-icon ios="wine" md="wine" color="primary"></ion-icon>
+      <p class="ion-no-margin">
+        <ion-text color="medium" *ngIf="userProfile.refills"
+          >{{userProfile.refills}} {{'PAGE_USER_PROFILE_REFILL' | translate}}<span *ngIf="userProfile.refills > 1"
+            >{{"PAGE_USER_PROFILE_REFILLS" | translate}}</span
+          ></ion-text
+        >
+        <ion-text color="medium" *ngIf="!userProfile.refills"
+          >0 {{'PAGE_USER_PROFILE_REFILL' | translate}}</ion-text
+        >
+      </p>
+    </a>
+  </div>
+</div>
+
+<div *ngIf="!emailVerified">
+  <div class="ion-margin-bottom info" *ngIf="userProfile">
+    <a class="ion-padding-end" [routerLink]="['/non-verified']">
+      <ion-icon ios="cash-outline" md="cash" color="primary"></ion-icon>
+      <p class="ion-no-margin">
+        <ion-text color="medium" *ngIf="userProfile.credit"
+          >{{userProfile.credit}} {{'PAGE_USER_PROFILE_CREDIT' | translate}}<span *ngIf="userProfile.credit > 1"
+            ></span
+          ></ion-text
+        >
+        <ion-text color="medium" *ngIf="!userProfile.credit"
+          >0 {{'PAGE_USER_PROFILE_CREDIT' | translate}}</ion-text
+        >
+      </p>
+    </a>
+    <a
+      [routerLink]="['/user-tabs/bottles']"
+      class="ion-padding-start ion-padding-end"
+    >
+      <ion-icon ios="wine-outline" md="wine-outline" color="primary"></ion-icon>
+      <p class="ion-no-margin">
+        <ion-text color="medium" *ngIf="userProfile.bottles"
+          >{{userProfile.bottles}} {{'PAGE_USER_PROFILE_Bottle' | translate}}<span *ngIf="userProfile.bottles > 1"
+            >{{"PAGE_USER_PROFILE_REFILLS" | translate}}</span
+          ></ion-text
+        >
+        <ion-text color="medium" *ngIf="!userProfile.bottles"
+          >0 {{'PAGE_USER_PROFILE_Bottle' | translate}}</ion-text
+        >
+      </p>
+    </a>
+    <a
+      class="ion-padding-start"
+      [routerLink]="['/non-verified']"
+      [state]="{ type: 'refill', reason: 'refill' }"
+    >
+      <ion-icon ios="wine" md="wine" color="primary"></ion-icon>
+      <p class="ion-no-margin">
+        <ion-text color="medium" *ngIf="userProfile.refills"
+          >{{userProfile.refills}} {{'PAGE_USER_PROFILE_REFILL' | translate}}<span *ngIf="userProfile.refills > 1"
+            >{{"PAGE_USER_PROFILE_REFILLS" | translate}}</span
+          ></ion-text
+        >
+        <ion-text color="medium" *ngIf="!userProfile.refills"
+          >0 {{'PAGE_USER_PROFILE_REFILL' | translate}}</ion-text
+        >
+      </p>
+    </a>
+  </div>
+</div>
+
+
+
+  <ion-card *ngIf="getTruePercentage() < 100">
+    <ion-card-header>
+      <ion-card-title>{{'PAGE_USER_PROFILE_PROFILE_COMPLETION_HEADING' | translate}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-progress-bar
+        class="ion-margin-bottom"
+        [value]="profileCompletionPercentage"
+      ></ion-progress-bar>
+      <p *ngIf="getTruePercentage() === 100">
+        <ion-text color="primary">{{'PAGE_USER_PROFILE_CONGRATULATIONS' | translate}}</ion-text>
+      </p>
+      <p>{{ 'PAGE_USER_PROFILE_PROFILE_COMPLETION_DESCRIPTION' | translate }}
+        <ion-text color="primary">{{getTruePercentage()}}%</ion-text> {{'PAGE_USER_PROFILE_COMPLETED' | translate}}
+      </p>
+      <p *ngIf="getTruePercentage() < 100">
+        {{'PAGE_USER_PROFILE_INVITE_AND_EARN' | translate}}
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">
+                CO2
+              </ion-label>
+              {{co2}}
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">
+                PLA
+              </ion-label>
+              {{pla}}
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <!-- <ion-card class="ion-margin-bottom">
+      <ion-card-header>
+        
+        <ion-card-title>QR Code</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="ion-text-center">
+        <ngx-qrcode
+          [value]="qrData"
+          [elementType]="qrCodeOptions.elementType"
+          [scale]="qrCodeOptions.scale"
+          #canvas
+          id="canvas"
+          *ngIf="qrData"
+        >
+        </ngx-qrcode>
+
+        <ion-button
+          expand="block"
+          color="secondary"
+          class="ion-margin-top"
+          [disabled]="qrDownloadBtnDisabled"
+          (click)="downloadQRCode()"
+        >
+          <ion-icon
+            md="cloud-download"
+            ios="cloud-download-outline"
+            class="ion-margin-end"
+          ></ion-icon>
+          Download Your Code
+        </ion-button>
+      </ion-card-content>
+    </ion-card> -->
+    <ion-button expand="block" (click)="qr()">Show QR</ion-button>
+    <form [formGroup]="inviteForm" (ngSubmit)="onInviteFormSubmit()">
+      <ion-card-header>
+        <ion-row class="ion-align-items-center">
+          <ion-col>
+            <span class="title">{{'PAGE_USER_PROFILE_INVITE_HEADING' | translate}}</span>
+          </ion-col>
+          <ion-col class="ion-text-right">
+            <app-spinner *ngIf="inviteFormLoading"></app-spinner>
+            <ion-button color="primary" fill="clear" type="submit"
+              >{{'PAGE_USER_PROFILE_INVITE_BUTTON' | translate}}</ion-button
+            >
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item class="ion-margin-bottom">
+          <ion-icon
+            ios="mail-outline"
+            md="mail-sharp"
+            slot="start"
+            color="primary"
+            class="ion-align-self-center"
+          ></ion-icon>
+          <ion-label position="stacked">{{'PAGE_USER_PROFILE_EMAIL_PLACEHOLDER' | translate}}</ion-label>
+          <ion-input
+            required
+            type="email"
+            placeholder="{{'PAGE_USER_PROFILE_EMAIL_PLACEHOLDER' | translate}}"
+            formControlName="email"
+          ></ion-input>
+        </ion-item>
+
+        <div *ngIf="inviteEmail.invalid && (inviteEmail.touched)">
+          <ion-text color="danger" *ngIf="inviteEmail.errors.required">
+            <sub>{{'PAGE_USER_PROFILE_EMAIL_REQUIRED_ERROR_MSG' | translate}}</sub>
+          </ion-text>
+          <ion-text color="danger" *ngIf="inviteEmail.errors.pattern">
+            <sub>{{'PAGE_USER_PROFILE_EMAIL_INVALID_ERROR_MSG' | translate}}</sub>
+          </ion-text>
+        </div>
+
+        <p><ion-text>{{'PAGE_USER_PROFILE_EMAIL_DESCRIPTION_MSG' | translate}}</ion-text></p>
+      </ion-card-content>
+    </form>
+  </ion-card>
+
+  <ion-card class="ion-margin-bottom">
+    <form [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()">
+      <ion-card-header>
+        <ion-row class="ion-align-items-center">
+          <ion-col>
+            <span class="title">{{'PAGE_USER_PROFILE_PROFILE_HEADING' | translate}}</span>
+          </ion-col>
+          <ion-col class="ion-text-right">
+            <app-spinner *ngIf="profileFormLoading"></app-spinner>
+            <!-- <ion-button color="primary" fill="clear" type="submit"
+              >{{'PAGE_USER_PROFILE_SAVE_BUTTON' | translate}}</ion-button
+            > -->
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-row>
+            <ion-col class="ion-no-padding ion-text-right">
+              <ion-text color="medium" *ngIf="firstName.value.length <= 45"
+                ><sub>{{50 - firstName.value.length}}</sub></ion-text
+              >
+              <ion-text
+                color="warning"
+                *ngIf="firstName.value.length > 45 && firstName.value.length <= 50"
+                ><sub>{{50 - firstName.value.length}}</sub></ion-text
+              >
+              <ion-text color="danger" *ngIf="firstName.value.length > 50"
+                ><sub>{{50 - firstName.value.length}}</sub></ion-text
+              >
+            </ion-col>
+          </ion-row>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="person-outline"
+              md="person"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{'PAGE_USER_PROFILE_FIRST_NAME_PLACEHOLDER' | translate}}</ion-label>
+            <ion-input
+              required
+              type="text"
+              placeholder="{{'PAGE_USER_PROFILE_FIRST_NAME_PLACEHOLDER' | translate}}"
+              formControlName="firstName"
+            ></ion-input>
+          </ion-item>
+
+          <div
+            *ngIf="firstName.invalid && (firstName.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="firstName.errors.minlength">
+              <p><sub>{{"PAGE_ADD_TITLE_ERROR_TITLE_MIN_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="firstName.errors.maxlength">
+              <p><sub>{{"PAGE_SHOPKEEPER_PROFILE_MAX_LIMIT" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="firstName.errors.pattern">
+              <p><sub>{{"PAGE_SHOPKEEPER_PROFILE_ALPHABETS" | translate}}</sub></p>
+            </ion-text>
+          </div>
+
+          <ion-row>
+            <ion-col class="ion-no-padding ion-text-right">
+              <ion-text color="medium" *ngIf="lastName.value.length <= 45"
+                ><sub>{{50 - lastName.value.length}}</sub></ion-text
+              >
+              <ion-text
+                color="warning"
+                *ngIf="lastName.value.length > 45 && lastName.value.length <= 50"
+                ><sub>{{50 - lastName.value.length}}</sub></ion-text
+              >
+              <ion-text color="danger" *ngIf="lastName.value.length > 50"
+                ><sub>{{50 - lastName.value.length}}</sub></ion-text
+              >
+            </ion-col>
+          </ion-row>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="person-outline"
+              md="person"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{'PAGE_USER_PROFILE_LAST_NAME_PLACEHOLDER' | translate}}</ion-label>
+            <ion-input
+              required
+              type="text"
+              placeholder="{{'PAGE_USER_PROFILE_LAST_NAME_PLACEHOLDER' | translate}}"
+              formControlName="lastName"
+            ></ion-input>
+          </ion-item>
+
+          <div
+            *ngIf="lastName.invalid && (lastName.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="lastName.errors.minlength">
+              <p><sub>{{"PAGE_ADD_TITLE_ERROR_TITLE_MIN_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="lastName.errors.maxlength">
+              <p><sub>{{"PAGE_SHOPKEEPER_PROFILE_MAX_LIMIT" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="lastName.errors.pattern">
+              <p><sub>{{"PAGE_SHOPKEEPER_PROFILE_ALPHABETS" | translate}}</sub></p>
+            </ion-text>
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="at-outline"
+              md="at"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{'PAGE_USER_PROFILE_USER_NAME_PLACEHOLDER' | translate}}</ion-label>
+            <ion-input
+              required
+              readonly
+              type="text"
+              placeholder="{{'PAGE_USER_PROFILE_USER_NAME_PLACEHOLDER' | translate}}"
+              formControlName="username"
+            ></ion-input>
+          </ion-item>
+
+          <div
+            *ngIf="username.invalid && (username.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="username.errors.required">
+              <p><sub>{{"PAGE_USER_ERROR_USER_NAME_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="username.errors.pattern">
+              <p>
+                <sub>
+                  {{"PAGE_USER_RULES" | translate}}
+                  </sub>
+              </p>
+              <p class="ion-no-margin">
+                <sub>{{"PAGE_USER_RULES_FORMAT" | translate}}</sub>
+              </p>
+              <p class="ion-no-margin">
+                <sub>{{"PAGE_USER_RULES_LIMITATIONS" | translate}}</sub>
+              </p>
+              <p class="ion-no-margin">
+                <sub>{{"PAGE_USER_RULES_UNDERSCORE" | translate}}</sub>
+              </p>
+              <p class="ion-no-margin">
+                <sub
+                  >{{"PAGE_USER_RULES_UNDERSCORE_MULTIPLE" | translate}}</sub
+                >
+              </p>
+              <p class="ion-no-margin">
+                <sub>{{"PAGE_USER_RULES_CHARECTER_LIMIT" | translate}}</sub>
+              </p>
+            </ion-text>
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="color-wand-outline"
+              md="color-wand"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{'PAGE_USER_PROFILE_USER_DATE_OF_BIRTH_PLACEHOLDER' | translate}}</ion-label>
+            <ion-datetime
+              placeholder="{{'PAGE_USER_PROFILE_USER_DATE_OF_BIRTH_PLACEHOLDER' | translate}}"
+              displayFormat="DD MM YYYY"
+              formControlName="dob"
+            ></ion-datetime>
+          </ion-item>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="home-outline"
+              md="home"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{'PAGE_USER_PROFILE_USER_ADDRESS_PLACEHOLDER' | translate}}</ion-label>
+            <ion-input
+              required
+              type="text"
+              placeholder="{{'PAGE_USER_PROFILE_USER_ADDRESS_PLACEHOLDER' | translate}}"
+              formControlName="address"
+            ></ion-input>
+          </ion-item>
+
+          <div
+            *ngIf="address.invalid && (address.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="address.errors.minlength">
+              <p><sub>{{"PAGE_SHOPKEEPER_PROFILE_ADDRESS_MIN_LIMIT" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="address.errors.maxlength">
+              <p><sub>{{"PAGE_SHOPKEEPER_PROFILE_MAX_LIMIT" | translate}}</sub></p>
+            </ion-text>
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="call-outline"
+              md="call"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{'PAGE_USER_PROFILE_USER_PHONE_NUMBER' | translate}}</ion-label>
+            <ion-intl-tel-input
+              formControlName="phone"
+              [defaultCountryiso]="'it'"
+              [selectFirstCountry]="'it'"
+              [onlyCountries]="['it']"
+              [selectFirstCountry]="true"
+              [modalCanSearch]="false"
+            >
+            </ion-intl-tel-input>
+          </ion-item>
+
+          <div *ngIf="phone.invalid && (phone.touched)" class="ion-text-start">
+            <ion-text color="danger" *ngIf="phone.errors.phone">
+              <p><sub>{{"PAGE_SHOPKEEPER_PROFILE_INVALID_PHONE" | translate}}</sub></p>
+            </ion-text>
+          </div>
+
+          
+          <ion-button expand="block" color="primary" fill="clear"  type="submit"
+          >{{'PAGE_USER_PROFILE_SAVE_BUTTON' | translate}}</ion-button>
+        </ion-list>
+        
+      </ion-card-content>
+    </form>
+  </ion-card>
+
+
+</ion-content>

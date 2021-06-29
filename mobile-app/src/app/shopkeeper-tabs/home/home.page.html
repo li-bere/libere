@@ -1,0 +1,169 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{'PAGE_SHOPKEEPER_HOME_TITLE' | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)=addshop() joyrideStep="seventhStep" title="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_SEVEN_TITLE' | translate}}" text="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_SEVEN_DETAILS' | translate}}">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button [routerLink]="['/shopkeeper-tabs/shops']" joyrideStep="eighthStep" title="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_EIGHT_TITLE' | translate}}" text="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_EIGHT_DETAILS' | translate}}">
+        <ion-icon name="pricetags-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content class="user-info">
+      <ion-row>
+        <ion-col size="6" class="ion-no-padding">
+          <ion-item
+            lines="none"
+            class="user-info-item"
+            [routerLink]="['/shopkeeper-tabs/profile']"
+          >
+            <ion-avatar slot="start">
+              <ion-img
+                [src]="user.displayPhoto"
+                *ngIf="user && user.displayPhoto"
+              ></ion-img>
+              <img
+                src="/assets/img/profile-image-placeholder.png"
+                alt="Photo"
+                *ngIf="user && !user.displayPhoto"
+              />
+            </ion-avatar>
+            <ion-label>
+              <h2
+                *ngIf="user && (user.firstName !== '' || user.lastName !== '')"
+              >
+                {{ user.firstName }} {{ user.lastName }}
+              </h2>
+              <h2 *ngIf="user && user.firstName === '' && user.lastName === ''">
+                {{'PAGE_SHOPKEEPER_HOME_FULL_NAME_LABEL' | translate}}
+              </h2>
+              <p>
+                <ion-text color="primary" *ngIf="user"
+                  >@{{user.username}}</ion-text
+                >
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="6" class="ion-no-padding">
+          <ion-item lines="none">
+            <ion-thumbnail slot="start">
+              <img src="/assets/img/coins.png" alt="Coins Image" />
+            </ion-thumbnail>
+            <ion-label>
+              <h2 *ngIf="user && user.credit">{{user.credit}} LiCoin</h2>
+              <h2 *ngIf="user && !user.credit">0 LiCoin</h2>
+              <p [routerLink]="['/shopkeeper-tabs/transactions']">
+                <ion-text color="primary">Transactions</ion-text>
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">
+                CO2
+              </ion-label>
+              {{co2}}
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">
+                PLA
+              </ion-label>
+              {{pla}}
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <p class="ion-padding ion-no-margin">
+    <ion-text color="primary">{{'PAGE_SHOPKEEPER_HOME_RECENT_REFILLS_LABEL' | translate}}</ion-text>
+  </p>
+
+  <ion-list class="ion-no-padding">
+    <p class="ion-no-margin ion-padding" *ngIf="refills && refills.length === 0">
+      {{"PAGE_SHOPKEEPER_HOME_NO_REFILLS_LABEL" | translate }}
+    </p>
+    <ion-card *ngFor="let refill of refills">
+      <ion-card-content>
+        <ion-item lines="none" class="refill">
+          <ion-avatar slot="start"  (click)="gotoUserProfile(refill.userUid)">
+            <ion-img
+              [src]="refill.userDisplayPhoto"
+              *ngIf="refill.userDisplayPhoto"
+            ></ion-img>
+            <img
+              src="/assets/img/profile-image-placeholder.png"
+              alt="Photo"
+              *ngIf="!refill.userDisplayPhoto"
+            />
+          </ion-avatar>
+          <ion-label>
+            <h4>
+              <ion-text color="primary" class="ion-text-capitalize"
+                >{{refill.shopName}}</ion-text
+              >
+            </h4>
+            <p *ngIf="refill.userName">{{refill.userName}}</p>
+            <p *ngIf="!refill.userName">{{'PAGE_SHOPKEEPER_HOME_FULL_NAME_LABEL' | translate}}</p>
+          </ion-label>
+          <ion-label slot="end" class="ion-text-center">
+            <h3>{{refill.amount}} {{'PAGE_SHOPKEEPER_HOME_CREDITS_LABEL' | translate}}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="ion-text-center ion-margin-bottom" *ngIf="refills && refills.length > 0">
+      <a
+        [routerLink]="['/shopkeeper-tabs/transactions']"
+        [state]="{ type: 'refill', reason: 'refill' }"
+        ><ion-text color="primary">{{'PAGE_SHOPKEEPER_HOME_SEE_MORE_BUTTON' | translate}}</ion-text></a
+      >
+    </div>
+  </ion-list>
+</ion-content>
+<!-- 
+<ion-toolbar class="footer">
+  <ion-card class="ion-no-margin">
+    <ion-card-content>
+      <a [routerLink]="['/shopkeeper-tabs/shops/add']">
+        <ion-icon
+          ios="pricetags-outline"
+          md="pricetags-outline"
+          color="primary"
+        ></ion-icon>
+        <p class="ion-no-margin">{{'PAGE_SHOPKEEPER_HOME_ADD_SHOPS_LABEL' | translate}}</p>
+      </a>
+      <a [routerLink]="['/shopkeeper-tabs/shops']">
+        <ion-icon
+          ios="pricetags-outline"
+          md="pricetags"
+          color="primary"
+        ></ion-icon>
+        <p class="ion-no-margin">{{'PAGE_SHOPKEEPER_HOME_VIEW_SHOPS_LABEL' | translate}}</p>
+      </a>
+    </ion-card-content>
+  </ion-card>
+</ion-toolbar> -->

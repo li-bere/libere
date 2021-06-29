@@ -1,0 +1,137 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{"PAGE_ADD_SHOP_TITLE" | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <app-spinner *ngIf="loading"></app-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="ion-margin-bottom">
+    <ion-card-header>
+      <ion-card-title class="title">{{"PAGE_ADD_SHOP_TITLE" | translate}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="pricetags-outline"
+              md="pricetags"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              type="text"
+              placeholder="{{'PAGE_ADD_SHOP_SHOPNAME_PLACEHOLDER' | translate}}"
+              formControlName="name"
+            ></ion-input>
+          </ion-item>
+
+          <div *ngIf="name.invalid && (name.touched)" class="ion-text-start">
+            <ion-text color="danger" *ngIf="name.errors.required">
+              <p><sub>{{"PAGE_ADD_SHOP_ERROR_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="name.errors.minlength">
+              <p><sub>{{"PAGE_ADD_TITLE_ERROR_TITLE_MIN_REQUIRED" | translate}}.</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="name.errors.maxlength">
+              <p><sub>{{"PAGE_SHOPKEEPER_PROFILE_MAX_LIMIT" | translate}}.</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="name.errors.pattern">
+              <p><sub>{{"PAGE_SHOPKEEPER_PROFILE_ALPHABETS" | translate}}</sub></p>
+            </ion-text>
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="at-outline"
+              md="at"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              type="text"
+              placeholder="{{'PAGE_ADD_SHOP_SHOP_ID' | translate}}"
+              formControlName="sid"
+            ></ion-input>
+          </ion-item>
+
+          <div *ngIf="sid.invalid && (sid.touched)" class="ion-text-start">
+            <ion-text color="danger" *ngIf="sid.errors.required">
+              <p><sub>{{"PAGE_ADD_SHOP_SHOP_ID_REQ" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="sid.errors.pattern">
+              <p><sub>{{"PAGE_ADD_SHOP_INVALID_SHOP_ID" | translate}}</sub></p>
+              <p class="ion-no-margin"><sub>{{"PAGE_ADD_SHOP_INVALID_SHOP_ID_1" | translate}}</sub></p>
+              <p class="ion-no-margin"><sub>{{"PAGE_ADD_SHOP_INVALID_SHOP_ID_2" | translate}}</sub></p>
+              <p class="ion-no-margin"><sub>{{"PAGE_ADD_SHOP_INVALID_SHOP_ID_3" | translate}}</sub></p>
+              <p class="ion-no-margin"><sub>{{"PAGE_ADD_SHOP_INVALID_SHOP_ID_4" | translate}}</sub></p>
+              <p class="ion-no-margin"><sub>{{"PAGE_ADD_SHOP_INVALID_SHOP_ID_5" | translate}}</sub></p>
+            </ion-text>
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="call-outline"
+              md="call"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-intl-tel-input
+              formControlName="phone"
+              [defaultCountryiso]="'it'"
+              [selectFirstCountry]="'it'"
+              [onlyCountries]="['it']"
+              [selectFirstCountry]="true"
+              [modalCanSearch]="false"
+            >
+            </ion-intl-tel-input>
+          </ion-item>
+
+          <div *ngIf="phone.invalid && (phone.touched)" class="ion-text-start">
+            <ion-text color="danger" *ngIf="phone.errors.phone">
+              <p><sub>{{"PAGE_SHOPKEEPER_PROFILE_INVALID_PHONE" | translate}}.</sub></p>
+            </ion-text>
+          </div>
+         
+          <app-location
+            [form]="form"
+            [address]="address"
+          >
+         
+          </app-location>
+         
+
+          <ion-item class="ion-margin-bottom">
+            <ion-label>{{"PAGE_ADD_SHOP_FOUNTAIN" | translate}}</ion-label>
+            <ion-checkbox
+              slot="end"
+              formControlName="isFountain"
+            ></ion-checkbox>
+          </ion-item>
+
+          <ion-button
+            fill="solid"
+            expand="block"
+            type="submit"
+            class="ion-margin-bottom"
+            [disabled]="form.invalid"
+          >
+            {{"PAGE_ADD_SHOP_REGISTER" | translate}}
+          </ion-button>
+        </ion-list>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

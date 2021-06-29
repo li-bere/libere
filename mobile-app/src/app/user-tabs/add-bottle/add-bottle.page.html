@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons> -->
+    <ion-title>{{'PAGE_USER_ADD_BOTTLE_PAGE_TITLE' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-text-center ion-margin-top ion-margin-bottom">
+    <!-- <img
+      class="img-profile ion-margin-bottom"
+      src="/assets/img/profile-image-placeholder.png"
+      alt="Image"
+    /> -->
+  </div>
+
+  <ion-card class="ion-margin-bottom">
+    <ion-card-header>
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <span class="title">{{'PAGE_USER_ADD_BOTTLE_PAGE_CARD_TITLE' | translate}}</span>
+        </ion-col>
+        <ion-col class="ion-text-right">
+          <app-spinner *ngIf="loading"></app-spinner>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              name="wine-outline"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              type="text"
+              placeholder="{{'PAGE_USER_ADD_BOTTLE_PAGE_INPUT_PLACEHOLDER' | translate}}"
+              formControlName="serial"
+            ></ion-input>
+          </ion-item>
+
+          <ion-text  color="success" *ngIf="serial.valid">
+            <p><sub>{{ serial.value }} {{"VALIDATOR__AVAILABLE" | translate}}</sub></p>
+          </ion-text>
+          <ion-text color="danger" *ngIf="serial.invalid && serial.dirty">
+            <p><sub>{{ serial.value }} {{"VALIDATOR_ERROR_NOT_AVAILABLE" | translate}}</sub></p>
+          </ion-text>
+          <ion-text color="primary" *ngIf="serial.pending">
+            <p><sub>{{"VALIDATOR_CHECKING" | translate}} {{ serial.value }}...</sub></p>
+          </ion-text>
+
+          <div
+            *ngIf="serial.invalid && (serial.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="serial.errors.required">
+              <p><sub>{{'PAGE_USER_ADD_BOTTLE_PAGE_INPUT_REQUIRED_ERROR' | translate}}</sub></p>
+            </ion-text>
+          </div>
+        </ion-list>
+
+        <ion-button
+          fill="solid"
+          expand="block"
+          type="submit"
+          class="ion-margin-bottom"
+          [disabled]="!form.valid"
+        >
+          {{'PAGE_USER_ADD_BOTTLE_PAGE_REGISTER_BUTTON' | translate}}
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

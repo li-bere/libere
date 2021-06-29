@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <span
+      class="spinner-border"
+      role="status"
+      *ngIf="loadingSpinner"
+      aria-hidden="true"
+    ></span>
+  </div>
+  <div *ngIf="!loadingSpinner" class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <label class="label-default font-weight-bold">Fee</label>
+          <button
+            class="btn btn-primary float-right"
+            (click)="showFeeCreationModal()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="card-body align-content-center">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                  <th>Created At</th>
+                  <th>Updated At</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let fee of feeData">
+                  <td class="text-capitalize">{{ fee.id }}</td>
+                  <td>{{ fee.value }}</td>
+                  <td>{{ fee.createdAt.toDate() | date }}</td>
+                  <td>{{ fee.updatedAt.toDate() | date }}</td>
+                  <td>
+                    <!-- <button
+                      class="btn btn-dark"
+                      (click)="showFeeEditModal(fee)"
+                    >
+                      <i class="fa fa-edit"></i>
+                    </button> -->
+                    <button
+                      class="btn btn-danger"
+                      (click)="showFeeDeleteConfirmationModal(fee.id)"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

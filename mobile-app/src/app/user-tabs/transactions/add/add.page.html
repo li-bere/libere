@@ -1,0 +1,168 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'PAGE_USER_TRANSACTIONS_ADD_TITLE' | translate}}</ion-title>
+    <ion-buttons slot="end" class="ion-margin-end" *ngIf="loading">
+      <app-spinner></app-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-margin-bottom">
+    <ion-card-header>
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <span class="title">{{'PAGE_USER_TRANSACTIONS_ADD_HEADING_TITLE' | translate }}</span>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="form">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="at-outline"
+              md="at"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input 
+              
+              type="text"
+              (ionChange)="getItems($event)"
+              placeholder="{{'PAGE_USER_TRANSACTIONS_ADD_SHOPID_PLACEHOLDER' | translate}}"
+              formControlName="shopSid"
+            ></ion-input>
+            
+                      
+          </ion-item>
+          <div class="add-sid">
+            <ion-list [hidden]="isShopSidSelected" *ngIf="isItemAvailable">
+              <ion-item (click)="setvalue(item)" *ngFor="let item of items">{{ item }}</ion-item>
+          </ion-list>
+          </div>
+        
+    
+
+         
+          <!-- template: `
+          <div class="search-results">
+            <input
+              [value]="search"
+              ngxTypeahead
+              [taParams]="params"
+              (taSelected)="handleResultSelected($event)"
+            />
+          </div>
+        `, -->
+          <!-- <input
+          [value]="search"
+          type="text"
+          ngxTypeahead
+          [taParams]="params"
+          (taSelected)="handleResultSelected($event)"
+          placeholder="{{'PAGE_USER_TRANSACTIONS_ADD_SHOPID_PLACEHOLDER' | translate}}"
+        
+        > -->
+        
+          
+          
+          <ion-text color="primary" *ngIf="shopSid.pending">
+            <p><sub>{{"PAGE_USER_TRANSACTION_AVAILABLE" | translate}} {{ shopSid.value }}...</sub></p>
+          </ion-text>
+          <div
+            *ngIf="shopSid.invalid && shopSid.dirty"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="shopSid.errors.shopExistence">
+              <p><sub>{{ shopSid.value }} {{"PAGE_USER_TRANSACTION_NOT_EXIST" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="shopSid.errors.isFountain">
+              <p><sub>{{ shopSid.value }} not a fountain</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="shopSid.errors.required">
+              <p><sub>{{'PAGE_USER_TRANSACTIONS_ADD_SHOP_REQUIRED' | translate}}</sub></p>
+            </ion-text>
+          </div>
+        </ion-list>
+        
+        
+      </form>
+      <div >
+        <ion-button
+        
+        fill="solid"
+        expand="block"
+        (click)="onSubmit()"
+        class="ion-margin-bottom"
+        [disabled]="!form.valid || btnRefillDisabled"
+      >
+      {{'PAGE_USER_TRANSACTION_ADD_REFILL_BUTTON' | translate}}
+      </ion-button>
+      <ion-button
+        fill="solid"
+        expand="block"
+        type="button"
+        class="ion-margin-bottom"
+        [disabled]="!form.valid || btnBuyDisabled"
+        (click)="buy()"
+      >
+      {{'PAGE_USER_TRANSACTION_ADD_BUY_BUTTON' | translate}}
+      </ion-button>
+      <ion-button *ngIf="!shopSid.valid" 
+      
+      fill="solid"
+      expand="block"
+      type="button"
+      class="ion-margin-bottom"
+      (click)="scanCode()"
+      
+    >  <ion-icon  name="qr-code-outline" slot="start"></ion-icon>
+   QR
+    </ion-button>
+      </div>
+      
+    </ion-card-content>
+  </ion-card>
+ 
+  <ion-card  *ngFor="let refill of transactions">
+    <div  *ngIf="refill.shopkeeperDisplayName">
+    <ion-card-content >
+      <ion-item lines="none" class="refill">
+        <ion-avatar slot="start" >
+          <ion-img
+            [src]="refill.shopDisplayPicture"
+            *ngIf="refill.shopDisplayPicture"
+          ></ion-img>
+          <img
+            src="/assets/img/profile-image-placeholder.png"
+            alt="Photo"
+            *ngIf="!refill.shopDisplayPicture"
+          />
+        </ion-avatar>
+        <ion-label>
+          <h4>
+            <ion-text color="primary" class="ion-text-capitalize" (click)="gotoShopkeeperProfile(refill.shopId)"
+              >{{refill.shopName}}</ion-text
+            >
+          </h4>
+          <p *ngIf="refill.shopkeeperDisplayName">{{refill.shopkeeperDisplayName}}</p>
+          <!-- <p *ngIf="!refill.shopkeeperDisplayName">Full Name</p> -->
+        </ion-label>
+        <ion-label slot="end" class="ion-text-center">
+          <h3>{{refill.amount}} LiCoin</h3>
+          <ion-button expand="block" (click)="getDirections(refill.shopId)"
+            >{{"PAGE_USER_HOME_DIRECTIONS_BUTTON" | translate}}</ion-button
+          >
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </div>
+  </ion-card>
+
+</ion-content>

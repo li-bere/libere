@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <span
+      class="spinner-border"
+      role="status"
+      *ngIf="loadingSpinner"
+      aria-hidden="true"
+    ></span>
+  </div>
+  <div *ngIf="!loadingSpinner" class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <label class="label-default font-weight-bold">Transactions</label>
+        </div>
+        <div class="card-body align-content-center">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Reason</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let transaction of transactions">
+                  <td class="text-capitalize">
+                    {{ transaction.type }}
+                  </td>
+                  <td class="text-capitalize">
+                    {{ transaction.reason }}
+                  </td>
+                  <td>{{ transaction.amount }}</td>
+                  <td>{{ transaction.description }}</td>
+                  <td class="text-capitalize">{{ transaction.shopkeeperName }}</td>
+                  <td class="text-capitalize">{{ transaction.userName }}</td>
+                  <td>{{ transaction.createdAt.toDate() | date }}</td>
+                  <td>
+                    <button
+                      class="btn btn-info"
+                      [routerLink]="['view-transaction']"
+                      [queryParams]="{ id: transaction.id }"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

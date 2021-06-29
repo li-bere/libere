@@ -1,0 +1,18 @@
+<ion-text color="medium">
+  <p><sub>{{"PAGE_VERFIY_EMAIL_EMAIL_RECEIVE" | translate}}</sub></p>
+</ion-text>
+<div *ngIf="showTimer">
+  <ion-text color="medium">
+    <p><sub>{{"PAGE_VERFIY_EMAIL_WAIT_RESEND" | translate}}</sub></p>
+  </ion-text>
+  <ion-text color="primary"><p>{{timeLeftFormated}}</p> </ion-text>
+</div>
+<ion-button *ngIf="!showTimer"
+  fill="solid"
+  type="button"
+  class="ion-margin-bottom"
+  [disabled]="disableResend"
+  (click)="resendEmail()"
+>
+{{"PAGE_VERFIY_EMAIL_RESEND" | translate}}
+</ion-button>

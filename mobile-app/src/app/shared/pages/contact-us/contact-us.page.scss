@@ -1,0 +1,14 @@
+ion-header {
+  &.header-md::after {
+    display: none;
+  }
+
+  ion-toolbar {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+}
+
+ion-content {
+  --ion-background-color: var(--ion-color-light);
+}

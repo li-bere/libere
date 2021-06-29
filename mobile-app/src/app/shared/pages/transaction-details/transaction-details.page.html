@@ -1,0 +1,150 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{"PAGE_USER_TRANSACTIONS_TITLE" | translate}}</ion-title>
+    <ion-buttons slot="end" class="ion-margin-end">
+      <app-spinner *ngIf="loading"></app-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+
+
+  
+
+  <ion-list *ngIf="!loading">
+    <!-- <ion-item>
+      <ion-label color="primary" position="stacked">{{"PAGE_TRANSACTION_USER_DISPLAY_NAME" | translate}}</ion-label>
+      {{transaction.userDisplayName}}
+    </ion-item>
+    <ion-item *ngIf="!transaction.userDisplayName">
+      <ion-label color="primary" position="stacked">{{"PAGE_TRANSACTION_USER_DISPLAY_NAME" | translate}}</ion-label>
+      N/A
+    </ion-item> -->
+    <!-- <div *ngIf="transaction"> -->
+      <ion-item>
+        <ion-label color="primary" position="stacked">Date</ion-label>
+        {{getDateObj(transaction.createdAt) | date: 'dd/MM/yyyy HH:SS'}}
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="stacked">{{"MODEL_USER_TRANSACTIONS_DESCRIPTION_LABEL" | translate}}</ion-label>
+        {{transaction.description}}
+      </ion-item>
+    
+      <ion-item *ngIf="transaction.userName">
+        <ion-label color="primary" position="stacked">{{"PAGE_USER_PROFILE_USER_NAME_PLACEHOLDER" | translate}}</ion-label>
+        {{transaction.userName}}
+      </ion-item>
+     <ion-item *ngIf="transaction.shopkeeperUserName">
+        <ion-label color="primary" position="stacked">{{"PAGE_TRANSACTION_SHOPKEEPER_DISPLAY_NAME" | translate}}</ion-label>
+        {{transaction.shopkeeperUserName}}
+      </ion-item>
+  
+      <ion-item *ngIf="transaction.shopName">
+        <ion-label color="primary" position="stacked">{{"PAGE_ADD_SHOP_SHOPNAME_PLACEHOLDER" | translate}}</ion-label>
+        {{transaction.shopName}}
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="stacked">{{"PAGE_TRANSACTION_AMOUNT" | translate}}</ion-label>
+        {{transaction.amount}}
+      </ion-item> 
+    </ion-list>
+    <!-- </div> -->
+    
+    <!-- <ion-item *ngIf="!transaction.userName">
+      <ion-label color="primary" position="stacked">{{"PAGE_USER_PROFILE_USER_NAME_PLACEHOLDER" | translate}}</ion-label>
+      N/A
+    </ion-item> -->
+    
+    <!-- <ion-item *ngIf="transaction.status">
+      <ion-label color="primary" position="stacked">{{"PAGE_TRANSACTION_DETAILS_STATUS" | translate}}</ion-label>
+      {{transaction.status}}
+    </ion-item> -->
+    <!-- <ion-item *ngIf="!transaction.status">
+      <ion-label color="primary" position="stacked">{{"PAGE_TRANSACTION_DETAILS_STATUS" | translate}}</ion-label>
+      N/A
+    </ion-item> -->
+
+    <!-- <ion-item >
+      <ion-label color="primary" position="stacked">{{"PAGE_TRANSACTION_SHOPKEEPER_DISPLAY_NAME" | translate}}</ion-label>
+      {{transaction.shopkeeperDisplayName}}
+    </ion-item>
+
+    <ion-item *ngIf="!transaction.shopkeeperDisplayName">
+      <ion-label color="primary" position="stacked">{{"PAGE_TRANSACTION_SHOPKEEPER_DISPLAY_NAME" | translate}}</ion-label>
+      N/A
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" position="stacked">{{"PAGE_CONFIRM_TRANSACTION_SHOPKEEPER_NAME" | translate}}</ion-label>
+      {{transaction.shopkeeperUserName}}
+    </ion-item>
+    <ion-item *ngIf="!transaction.shopkeeperUserName">
+      <ion-label color="primary" position="stacked">{{"PAGE_CONFIRM_TRANSACTION_SHOPKEEPER_NAME" | translate}}</ion-label>
+      N/A
+    </ion-item> -->
+   
+    <!-- <ion-item *ngIf="!transaction.shopName">
+      <ion-label color="primary" position="stacked">{{"PAGE_ADD_SHOP_SHOPNAME_PLACEHOLDER" | translate}}</ion-label>
+      N/A
+    </ion-item> -->
+   
+    <!-- <ion-item>
+      <ion-label color="primary" position="stacked">{{"PAGE_TRANSACTION_TYPE" | translate}}</ion-label>
+      {{transaction.type}}
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" position="stacked">{{"PAGE_TRANSACTION_AMOUNT" | translate}}</ion-label>
+      {{transaction.amount}}
+    </ion-item> -->
+
+    
+
+  
+
+    <div *ngIf="!loading">
+      <div *ngIf="transaction.shopId !== null">
+        <div *ngIf="transaction.to === transaction.userUid">
+          <div class="rating-comp" *ngIf="transaction.status != 'PENDING'">
+            <app-rating [childMessage]=transactionId></app-rating>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+
+  <div class="ion-text-center" *ngIf="!loading">
+    <div *ngIf="transaction.shopId !== null">
+      <!-- <div *ngIf="transaction.reason=='buy' || 'ref'"></div> -->
+      <div *ngIf="transaction.userUid">
+      <ion-button *ngIf="transaction.to !== transaction.userUid "
+      fill="solid"
+      expand="block"
+      type="button"
+      class="ion-margin-bottom"
+      (click)="viewUser(transaction.userUid)"
+    >
+      {{"PAGE_TRNSACTION_PROFILE_USER" | translate}}
+    </ion-button>
+  </div>
+    
+    <ion-button *ngIf="transaction.to === transaction.userUid"
+    fill="solid"
+    expand="block"
+    type="button"
+    class="ion-margin-bottom"
+    (click)="viewShop(transaction.shopId)"
+  >
+    {{"PAGE_TRNSACTION_PROFILE_SHOP" | translate}}
+  </ion-button>
+    </div>
+
+  </div>
+  <ion-button fill="clear" type="button" expand="block" color="dark" class="ion-margin-bottom" (click)="back()">
+    {{"PAGE_TRANSACTION_BACK" | translate}}
+  </ion-button>
+</ion-content>

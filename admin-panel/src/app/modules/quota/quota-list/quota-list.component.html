@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <span
+      class="spinner-border"
+      role="status"
+      *ngIf="loadingSpinner"
+      aria-hidden="true"
+    ></span>
+  </div>
+  <div *ngIf="!loadingSpinner" class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <label class="label-default font-weight-bold">Quota</label>
+          <button
+            class="btn btn-primary float-right"
+            (click)="showQuotaCreationModal()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="card-body align-content-center">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                  <th>Created At</th>
+                  <th>Updated At</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let quota of quotaData">
+                  <td class="text-capitalize">{{ quota.id }}</td>
+                  <td>{{ quota.value }}</td>
+                  <td>{{ quota.createdAt.toDate() | date }}</td>
+                  <td>{{ quota.updatedAt.toDate() | date }}</td>
+                  <td>
+                    <!-- <button
+                      class="btn btn-dark"
+                      (click)="showQuotaEditModal(quota)"
+                    >
+                      <i class="fa fa-edit"></i>
+                    </button> -->
+                    <button
+                      class="btn btn-danger"
+                      (click)="showQuotaDeleteConfirmationModal(quota.id)"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

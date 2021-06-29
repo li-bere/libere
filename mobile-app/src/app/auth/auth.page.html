@@ -1,0 +1,56 @@
+<ion-content class="ion-padding">
+  <!-- <ion-button (click)='fblogin()'>
+    facebook login
+  </ion-button> -->
+
+  <!-- <ion-slides pager="true" options="sliderOpts">
+    <ion-slide>
+      <ion-grid>
+        <img src="/assets/img/welcome-slide-1.png" />
+        <h2><b>Welcome</b></h2>
+        <p><b>Libere</b> is an application to reuce the usage of plastic in daily life.</p>
+      </ion-grid>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-grid>
+        <img src="/assets/img/welcome-slide-2.png" />
+        <h2><b>Welcome</b></h2>
+        <p><b>Libere</b> is an application to reuce the usage of plastic in daily life.</p>
+      </ion-grid>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-grid>
+        <img src="/assets/img/welcome-slide-3.png" />
+        <h2>Ready to Check?</h2>
+        <ion-button fill="clear" routerLink="/login">Get Started 
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides> -->
+
+  
+
+  <div class="auth-container">
+    <div class="logo ion-text-center">
+      <img src="/assets/img/logo.png" alt="Logo" />
+      <h4>Libere</h4>
+    </div>
+    <ion-label color="primary">Login with</ion-label>
+    <div class="btns ion-text-center">
+      <div class="social-btns ion-padding">
+        <ion-fab-button (click)='fblogin()'><ion-icon name="logo-google"></ion-icon></ion-fab-button>
+        <ion-fab-button><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
+      </div>
+
+    
+      <a [routerLink]="['/auth/login']">or go to login page</a>
+    </div>
+  </div>
+
+</ion-content>
+
+
+

@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>non-verified</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div class=" ion-text-center"  >
+  <h3 class="ion-margin ion-text-start">{{"PAGE_TRANSACTION_VERIFICATION_REQUIRED" | translate}}</h3>
+  <ion-button (click)="email()"> Open Mail</ion-button>
+  <app-anti-flood></app-anti-flood>
+</div>
+</ion-content>

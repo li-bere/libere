@@ -1,0 +1,194 @@
+<ion-content class="ion-padding">
+  <div class="container">
+    <div class="language-container">
+      <app-language-toggle></app-language-toggle>
+    </div>
+    <div class="top-content img-text">
+      <img src="/assets/img/logo.png" alt="Logo" />
+      <h4>{{ 'PAGE_LOGIN_TITLE' | translate }}</h4>
+    </div>
+    <div class="bottom-content btns">
+      <form [formGroup]="form" (keyup.enter)="onSubmit()">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="mail-outline"
+              md="mail"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              type="email"
+              placeholder="{{'PAGE_LOGIN_EMAIL_PLACEHOLDER' | translate}}"
+              formControlName="email"
+            ></ion-input>
+          </ion-item>
+  
+          <div *ngIf="email.invalid && (email.touched)">
+            <ion-text color="danger" *ngIf="email.errors.required">
+              <sub>{{ 'PAGE_LOGIN_ERROR_MSG_EMAIL_REQUIRED' | translate }}</sub>
+            </ion-text>
+            <ion-text color="danger" *ngIf="email.errors.pattern">
+              <sub>{{'PAGE_LOGIN_ERROR_MSG_EMAIL_INVALID' | translate}}</sub>
+            </ion-text>
+          </div>
+  
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="lock-closed-outline"
+              md="lock-closed"
+              slot="start"
+              color="primary"
+            ></ion-icon>
+            <ion-input
+            clearOnEdit=false
+              required
+              [type]="passwordType"
+              placeholder="{{'PAGE_LOGIN_PASSWORD_PLACEHOLDER' | translate}}"
+              formControlName="password"
+            ></ion-input>
+            <ion-icon
+              slot="end"
+              [name]="passwordIcon"
+              class="password-icon"
+              (click)="hideShowPassword()"
+            ></ion-icon>
+          </ion-item>
+  
+          <div *ngIf="password.invalid && (password.touched)">
+            <ion-text color="danger" *ngIf="password.errors.required">
+              <sub>{{'PAGE_LOGIN_ERROR_MSG_PASSWORD_REQUIRED' | translate}}</sub>
+            </ion-text>
+          </div>
+        </ion-list>
+  
+        <div class="ion-text-right ion-margin-bottom">
+          <a [routerLink]="['/auth/forgot-password']">{{'PAGE_LOGIN_FORGOT_PASSWORD_BUTTON' | translate}}</a>
+        </div>
+  
+        <ion-button shape="round"
+          fill="solid"
+          expand="block"
+          (click)="onSubmit()"
+          class="ion-margin-bottom"
+          [disabled]="form.invalid"
+        >
+          {{'PAGE_LOGIN_LOGIN_BUTTON' | translate}}
+        </ion-button>
+      </form>
+      <div class="ion-text-center ion-margin-bottom">
+        {{'PAGE_LOGIN_DONOT_HAVE_ACCOUNT_TEXT' | translate}} <a [routerLink]="['/auth/register']">{{'PAGE_LOGIN_SIGNUP_BUTTON' | translate}}</a>
+      </div>
+  
+      <p class="ion-text-center ion-margin-bottom">{{"PAGE_LOGIN_OR" | translate}}</p>
+
+      <ion-button shape="round"
+        fill="solid"
+        expand="block"
+        type="button"
+        class="btn-fb ion-margin-bottom"
+        (click)="facebookLogin()"
+      >
+        {{'PAGE_LOGIN_WITH_FACEBOOK' | translate}}
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+
+<!-- <ion-content class="ion-padding-horizontal ion-padding-bottom">
+  <div class="fullheight xc">
+    <div class="ion-text-center">
+      <img src="/assets/img/logo.png" alt="Logo" />
+      <h5>Login</h5>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">
+        <ion-item class="ion-margin-bottom">
+          <ion-icon
+            ios="mail-outline"
+            md="mail"
+            slot="start"
+            color="primary"
+            class="ion-align-self-center"
+          ></ion-icon>
+          <ion-input
+            required
+            type="text"
+            placeholder="Email"
+            formControlName="email"
+          ></ion-input>
+        </ion-item>
+
+        <div *ngIf="email.invalid && (email.touched)">
+          <ion-text color="danger" *ngIf="email.errors.required">
+            <sub>Email is required.</sub>
+          </ion-text>
+          <ion-text color="danger" *ngIf="email.errors.pattern">
+            <sub>Email is not valid.</sub>
+          </ion-text>
+        </div>
+
+        <ion-item class="ion-margin-bottom">
+          <ion-icon
+            ios="lock-closed-outline"
+            md="lock-closed"
+            slot="start"
+            color="primary"
+          ></ion-icon>
+          <ion-input
+            required
+            [type]="passwordType"
+            placeholder="Password"
+            formControlName="password"
+          ></ion-input>
+          <ion-icon
+            slot="end"
+            [name]="passwordIcon"
+            class="password-icon"
+            (click)="hideShowPassword()"
+          ></ion-icon>
+        </ion-item>
+
+        <div *ngIf="password.invalid && (password.touched)">
+          <ion-text color="danger" *ngIf="password.errors.required">
+            <sub>Password is required.</sub>
+          </ion-text>
+        </div>
+      </ion-list>
+
+      <div class="ion-text-right ion-margin-bottom">
+        <a [routerLink]="['/forgot-password']">Forgot Password</a>
+      </div>
+
+      <ion-button
+        fill="solid"
+        expand="block"
+        type="submit"
+        class="ion-margin-bottom"
+        [disabled]="form.invalid"
+      >
+        Login
+      </ion-button>
+    </form>
+
+    <div class="ion-text-center ion-margin-bottom">
+      Don't have an account? <a [routerLink]="['/register']">SignUp</a>
+    </div>
+
+    <p class="ion-text-center ion-margin-bottom">OR</p>
+
+    <ion-button
+      fill="solid"
+      expand="block"
+      type="button"
+      class="btn-fb"
+      (click)="facebookLogin()"
+    >
+      Login with Facebook
+    </ion-button>
+  </div>
+</ion-content> -->

@@ -1,0 +1,12 @@
+<div class="language-select">
+  <ion-item>
+    <ion-icon name="language" color="dark"></ion-icon>
+    <ion-label class="ion-padding-start">Language</ion-label>
+    <ion-select #s value="notifications" interface="action-sheet" (ionChange)="select(s.value);"> 
+      <ion-select-option value="en" >{{'LANGUAGE_ENGLISH' | translate}}</ion-select-option>
+      <ion-select-option value="it" >{{'LANGUAGE_ITALIAN' | translate}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+</div>
+
+

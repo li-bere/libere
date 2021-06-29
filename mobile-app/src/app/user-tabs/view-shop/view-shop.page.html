@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>View Shop</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-text-center content-header" *ngIf="shopView">
+    <div class="ion-margin-bottom img-profile">
+      <ion-avatar>
+        <img
+        class="ion-margin-bottom"
+        [src]="shopView.shopDisplayPhoto"
+        *ngIf="shopView.shopDisplayPhoto"
+      />
+      <img
+        class="ion-margin-bottom"
+        src="/assets/img/profile-image-placeholder.png"
+        *ngIf="!shopView.shopDisplayPhoto"
+      />
+      </ion-avatar>
+      
+    </div>
+    <p
+      class="ion-no-margin ion-margin-bottom"
+      *ngIf="shopView.name !== '' || shopView.name !== ''"
+    >
+      {{ shopView.name }} 
+
+    </p>
+    <p 
+    class="ion-no-margin ion-margin-bottom"
+    *ngIf="shopView.shopkeeperName !== '' || shopView.shopkeeperName !== ''"
+  >
+    {{ shopView.shopkeeperName }} 
+    
+  </p>
+
+    <!-- <div class="viewshopkeeperprofile">
+      <ion-button color="primary" expand="block" (click)="gotoShopkeeperProfile(shopView.shopkeeperUid)">
+        view shopkeeper profile
+      </ion-button>
+    </div> -->
+  </div>
+
+<div class="body" *ngIf="shopView">
+  <ion-card class="ion-margin-bottom">
+
+      <ion-card-content>
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="person-outline"
+              md="person"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{"PAGE_ADD_SHOP_SHOPNAME_PLACEHOLDER" | translate}}</ion-label>
+            {{ shopView.name }}
+          </ion-item>
+
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="at-outline"
+              md="at"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{"PAGE_USER_TRANSACTIONS_ADD_SHOPID_PLACEHOLDER" | translate}}</ion-label>
+            {{ shopView.sid }}
+          </ion-item>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="home-outline"
+              md="home"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{"PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_ADDRESS_LABEL" | translate}}</ion-label>
+            {{ shopView.address.location }} 
+          </ion-item>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="call-outline"
+              md="call"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-label position="stacked">{{"PAGE_USER_PROFILE_USER_PHONE_NUMBER" | translate}}</ion-label>
+            {{ shopView.phone.internationalNumber }}
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+  </ion-card>
+</div>
+
+</ion-content>

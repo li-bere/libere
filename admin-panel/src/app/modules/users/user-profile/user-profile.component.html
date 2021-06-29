@@ -1,0 +1,48 @@
+<div class="container">
+  <div *ngIf="loadingSpinner" class="d-flex justify-content-center">
+    <span class="spinner-border" role="status" aria-hidden="true"></span>
+  </div>
+  <div *ngIf="!loadingSpinner" class="row d-flex justify-content-center">
+    <div class="col-md-12 d-flex justify-content-center">
+      <h4>{{ user.firstName + " " + user.lastName | titlecase }}</h4>
+    </div>
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6 card border-right-0 border-bottom-0 p-0 mb-0">
+          <div class="card-header border-bottom-0 text-center bg-white">
+            <strong>User Type</strong>
+          </div>
+          <div class="card-body text-center">
+            {{ obj.keys(user.roles)[0] | titlecase }}
+          </div>
+        </div>
+        <div class="col-md-6 card border-bottom-0 p-0 mb-0">
+          <div class="card-header border-bottom-0 text-center bg-white">
+            <strong>Email</strong>
+          </div>
+          <div class="card-body text-center">{{ user.email }}</div>
+        </div>
+        <div class="col-md-6 card border-right-0 border-bottom-0 p-0 mb-0">
+          <div class="card-header border-bottom-0 text-center bg-white">
+            <strong>Phone</strong>
+          </div>
+          <div class="card-body text-center">{{ user.phone?.internationalNumber }}</div>
+        </div>
+        <div class="col-md-6 card border-bottom-0 p-0 mb-0">
+          <div class="card-header border-bottom-0 text-center bg-white">
+            <strong>Joined</strong>
+          </div>
+          <div class="card-body text-center">
+            {{ user.createdAt.toDate() | date }}
+          </div>
+        </div>
+        <div class="col-md-12 card p-0 mb-0">
+          <div class="card-header border-bottom-0 text-center bg-white">
+            <strong>Address</strong>
+          </div>
+          <div class="card-body text-center">{{ user.address }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{"PAGE_SHOPKEEPER_TRANSFER_FUNDS" | translate}}</ion-title>
+    <ion-buttons slot="end" class="ion-margin-end">
+      <app-spinner *ngIf="loading"></app-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-margin-bottom">
+    <ion-card-header>
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <span class="title">{{'PAGE_SHOPKEEPER_TRANSFER_FUNDS' | translate }}</span>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="at-outline"
+              md="at"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              type="text"
+              placeholder="{{'PAGE_USER_PROFILE_USER_NAME_PLACEHOLDER' | translate}}"
+              formControlName="username"
+            ></ion-input>
+          </ion-item>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="at-outline"
+              md="at"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              type="number"
+              placeholder="LiCoins"
+              formControlName="credits"
+            ></ion-input>
+          </ion-item>
+
+          <!-- <div
+            *ngIf="shopSid.invalid && (shopSid.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="shopSid.errors.required">
+              <p><sub>{{'PAGE_USER_TRANSACTIONS_ADD_SHOP_REQUIRED' | translate}}</sub></p>
+            </ion-text>
+          </div> -->
+        </ion-list>
+
+        <ion-button
+          fill="solid"
+          expand="block"
+          type="submit"
+          class="ion-margin-bottom"
+          [disabled]="form.invalid"
+        >
+        {{"PAGE_SHOPKEEPER_TRANSFER" | translate}}
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

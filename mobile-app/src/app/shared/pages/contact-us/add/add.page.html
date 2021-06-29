@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'PAGE_ADD_HEADER' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-margin-bottom">
+    <ion-card-header>
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <span class="title">{{'PAGE_ADD_TITLE' | translate}}</span>
+        </ion-col>
+        <ion-col class="ion-text-right">
+          <app-spinner *ngIf="loading"></app-spinner>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDir="ngForm">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item class="ion-margin-bottom">
+            <ion-input
+              type="text"
+              placeholder="{{'PAGE_ADD_TITLE_PLACE_HOLDER' | translate}}"
+              formControlName="title"
+            ></ion-input>
+          </ion-item>
+
+          <div *ngIf="title.invalid && (title.touched)" class="ion-text-start">
+            <ion-text color="danger" *ngIf="title.errors.required">
+              <p><sub>{{'PAGE_ADD_TITLE_ERROR_TITLE_REQUIRED' | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="title.errors.minlength">
+              <p><sub>{{'PAGE_ADD_TITLE_ERROR_TITLE_MIN_REQUIRED' | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="title.errors.maxlength">
+              <p><sub>{{'PAGE_ADD_TITLE_ERROR_TITLE_MAX_REQUIRED' | translate}}</sub></p>
+            </ion-text>
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-textarea
+              rows="7"
+              type="text"
+              placeholder="{{'PAGE_ADD_DESCRIPTION_PLACE_HOLDER' | translate}}"
+              formControlName="description"
+            ></ion-textarea>
+          </ion-item>
+
+          <div
+            *ngIf="description.invalid && (description.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="description.errors.required">
+              <p><sub>{{'PAGE_ADD_DESCRIPTION_ERROR_DESCRIPTION_REQUIRED' | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="description.errors.minlength">
+              <p><sub>{{'PAGE_ADD_DESCRIPTION_ERROR_DESCRIPTION_MIN_REQUIRED' | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="description.errors.maxlength">
+              <p><sub>{{'PAGE_ADD_DESCRIPTION_ERROR_DESCRIPTION_MAX_REQUIRED' | translate}}</sub></p>
+            </ion-text>
+          </div>
+        </ion-list>
+
+        <ion-button
+          fill="solid"
+          expand="block"
+          type="submit"
+          class="ion-margin-top ion-margin-bottom"
+          [disabled]="form.invalid"
+        >
+        {{'PAGE_ADD_BUTTON' | translate}}
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

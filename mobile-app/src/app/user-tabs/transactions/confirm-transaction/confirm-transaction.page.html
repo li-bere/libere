@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{"PAGE_CONFIRM_TRANSACTION_TITLE" | translate}}</ion-title>
+    <ion-buttons slot="end" class="ion-margin-end">
+      <app-spinner *ngIf="loading"></app-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="fullheight xc">
+    <div class="ion-text-center ion-padding-top">
+      <img src="/assets/img/logo.png" alt="Logo" />
+
+      <!-- <h4 class="ion-text-capitalize"><ion-text color="primary">{{type}}</ion-text></h4> -->
+      <h4 class="ion-text-capitalize" *ngIf="paramsResult.type === 'REFILL'"><ion-text color="primary">{{"PAGE_USER_TRANSACTION_ADD_REFILL_BUTTON" | translate}}</ion-text></h4>
+      <h4 class="ion-text-capitalize" *ngIf="paramsResult.type === 'BUY'"><ion-text color="primary">{{"PAGE_USER_TRANSACTION_ADD_BUY_BUTTON" | translate}}</ion-text></h4>
+      <!-- <h4 *ngIf="type === 'BUY'">umadofgoeriufpoerijir</h4> -->
+    </div>
+    <div class="ion-text-center ion-padding" *ngIf="paramsResult.type === 'BUY' ">
+     {{"PAGE_CONFIRM_TRANSACTION_SHOP_APPROVAL" | translate}}
+    </div>
+
+    <div class="details" *ngIf="shop">
+  
+      <p>{{"PAGE_CONFIRM_TRANSACTION_SHOP_NAME" | translate}}</p>
+      <h5>{{shop.name}}</h5>
+
+      <p>{{"PAGE_CONFIRM_TRANSACTION_SHOP_ID" | translate}}</p>
+      <h5>{{shop.shopId}}</h5>
+
+      <!-- <p>{{"PAGE_CONFIRM_TRANSACTION_SHOPKEEPER_NAME" | translate}}</p>
+      <h5>{{shop.shopkeeperName}}</h5> -->
+
+      <p *ngIf="paramsResult.type === transactionTypes.REFILL">{{"PAGE_CONFIRM_PAGE_CREDITS_NEEDED" | translate}}</p>
+      <p *ngIf="paramsResult.type === transactionTypes.BUY">{{"PAGE_CONFIRM_PAGE_CREDITS" | translate}}</p>
+      <app-spinner *ngIf="creditLoading"></app-spinner>
+      <h4 *ngIf="!creditLoading"><ion-text color="primary">{{credit}}</ion-text></h4>
+    </div>
+
+    <div class="ion-text-center">
+      <ion-button
+        fill="solid"
+        expand="block"
+        type="button"
+        shape="round"
+        class="ion-margin-bottom"
+        (click)="confirmTransaction()"
+      >
+        {{"PAGE_CONFIRM_TRANSACTION_CONFIRM" | translate}}
+      </ion-button>
+
+      <ion-button
+        fill="clear"
+        type="button"
+        color="dark"
+        class="ion-margin-bottom"
+        (click)="back()"
+      >
+        {{"PAGE_CONFIRM_TRANSACTION_CANCEL" | translate}}
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+

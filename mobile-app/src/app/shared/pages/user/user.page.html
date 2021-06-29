@@ -1,0 +1,161 @@
+<ion-content class="ion-padding">
+  <app-language-toggle></app-language-toggle>
+  <div class="fullheight xc">
+    <div class="ion-text-center">
+      <h5>{{"PAGE_USER_TITLE" | translate}}</h5>
+      
+        
+     
+      <ion-buttons slot="end">
+        <app-spinner *ngIf="loading"></app-spinner>
+      </ion-buttons>
+      
+    </div>
+      
+    <form [formGroup]="form" (keyup.enter)="onSubmit()" #formDir="ngForm">
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">
+        <ion-item class="ion-margin-bottom">
+          <ion-icon
+            ios="at-outline"
+            md="at"
+            slot="start"
+            color="primary"
+            class="ion-align-self-center"
+          ></ion-icon>
+          <ion-label position="stacked">{{"PAGE_USER_LABEL_USER_NAME" | translate}}</ion-label>
+          <ion-input
+            required
+            type="text"
+            placeholder="{{'PAGE_USER_PLACEHOLDER_USER_NAME' | translate}}"
+            formControlName="username"
+          ></ion-input>
+        </ion-item>
+
+        <ion-text color="danger" *ngIf="username.invalid && username.dirty">
+          <p><sub>{{ username.value }}  {{"VALIDATOR_ERROR_NOT_AVAILABLE" | translate}}</sub></p>
+        </ion-text>
+        <ion-text color="success" *ngIf="username.valid">
+          <p><sub>{{ username.value }}  {{"VALIDATOR__AVAILABLE" | translate}}</sub></p>
+        </ion-text>
+        <ion-text color="primary" *ngIf="username.pending">
+          <p><sub> {{"VALIDATOR_CHECKING" | translate}}  {{ username.value }}</sub></p>
+        </ion-text>
+        <div
+          *ngIf="username.invalid && (username.touched)"
+          class="ion-text-start"
+        >
+       
+    
+
+          <ion-text color="danger" *ngIf="username.errors.required">
+            <p><sub>{{"PAGE_USER_ERROR_USER_NAME_REQUIRED" | translate}}</sub></p>
+          </ion-text>
+          <ion-text color="danger" *ngIf="username.errors.pattern">
+            <p>
+              <sub
+                >{{"PAGE_USER_RULES" | translate }}
+                </sub
+              >
+            </p>
+            <p class="ion-no-margin">
+              <sub
+                >{{"PAGE_USER_RULES_FORMAT" | translate}}
+                </sub
+              >
+            </p>
+            <p class="ion-no-margin">
+              <sub
+                >{{"PAGE_USER_RULES_LIMITATIONS" | translate}}
+                </sub
+              >
+            </p>
+            <p class="ion-no-margin">
+              <sub
+                >{{"PAGE_USER_RULES_UNDERSCORE" | translate}}
+                </sub
+              >
+            </p>
+            <p class="ion-no-margin">
+              <sub
+                >{{"PAGE_USER_RULES_UNDERSCORE_MULTIPLE" | translate}}
+                </sub
+              >
+            </p>
+            <p class="ion-no-margin">
+              <sub>{{"PAGE_USER_RULES_CHARECTER_LIMIT" | translate}}</sub>
+            </p>
+          </ion-text>
+        </div>
+
+        <!-- <ion-item >
+        <p>
+           <ion-label>{{"PAGE_USER_LABEL_SHOPKEEPER" | translate}}</ion-label>
+          <sub>{{'PAGE_USER_LABEL_SHOPKEEPER1' | translate}}</sub>
+         
+        </p>  
+        <ion-checkbox
+            slot="end"
+            formControlName="isShopKeeper"
+          ></ion-checkbox>
+         
+        </ion-item> -->
+        <!-- <div> -->
+        
+        <!-- </div> -->
+        <!-- <ion-item>
+           
+        </ion-item> -->
+
+        <ion-item class="ion-margin-top ">
+          <ion-icon
+            class="ion-padding-top ion-margin-top "  
+            ios="at-outline"
+            md="at"
+            slot="start"
+            color="primary"
+            class="ion-align-self-center"
+          ></ion-icon>
+          <ion-label position="stacked">{{"PAGE_USER_LABEL_RAFERAL" | translate}}  {{"PAGE_USER_REFERAL_OPTIONAL" | translate}}</ion-label>
+          <!-- <sub class="ion-padding-top ion-margin-bottom " color="primary" >
+            {{"PAGE_USER_REFERAL_OPTIONAL" | translate}}
+          </sub> -->
+          <ion-input
+          [(ngModel)]="invitedFrom"
+            type="text"
+            placeholder="{{'PAGE_USER_LABEL_RAFERAL' | translate}}"
+            formControlName="referral"
+          ></ion-input>
+     
+        </ion-item>
+
+
+
+      </ion-list>
+      <ion-text  >
+        <sub>{{'PAGE_USER_INSTRUCTIONS' | translate}}</sub>
+      </ion-text>
+
+    </form>
+
+    <ion-item>
+      <ion-label>{{"PAGE_USER_LABEL_INVITES" | translate}}</ion-label>
+      <ion-select (ionChange)="setValue($event)">
+        <ion-select-option *ngFor="let user of allUserInvites">{{user.inviterUserName}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button
+    fill="solid"
+    expand="block"
+    (click)="onSubmit()"
+    class="ion-margin-top ion-margin-bottom"
+    [disabled]="!form.valid"
+  >
+    {{"PAGE_USER_BUTTON_SAVE" | translate}}
+  </ion-button>
+
+    <div class="ion-text-center ion-margin-bottom">
+      <a (click)="signOut()"><ion-text color="dark">{{"PAGE_USER_BUTTON_LOGOUT" | translate}}</ion-text></a>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,41 @@
+
+<div class="rating-component ion-margin">
+  <app-spinner *ngIf="loading"></app-spinner>
+<div class="rating">
+  <ion-label>{{"RATE_SHOP" | translate}}</ion-label>
+</div>
+
+
+<div>
+  <rating *ngIf="!rate" (rateChange)="onModelChange($event)" readonly="false" size="default"></rating>
+  <rating [(ngModel)]="rate" *ngIf="rate" readonly="true" size="default"></rating>
+</div>
+<ion-button *ngIf="!rateComment" (click)="viewCommentBox()" position="stacked" color="primary">
+  {{"ADD_COMMENT" | translate}}
+</ion-button>
+<!-- <form [formGroup]="ratingForm" *ngIf="!rateComment">
+    <ion-label position="stacked" color="primary">{{"ADD_COMMENT" | translate}}</ion-label>
+    <ion-textarea type="text" rows="3" formControlName="comment"></ion-textarea>
+    <div *ngIf="ratingForm.invalid && ratingForm.dirty">
+      <ion-text color="danger"><small>{{"COMPONENT_RATING_LIMIT" | translate}}</small></ion-text>
+      
+    </div>
+    <ion-button fill="clear" (click)="submitRating(ratingForm.value)" [disabled]="!ratingForm.valid">Save</ion-button>
+  </form> -->
+
+
+  <p *ngIf="rateComment">
+    {{ rateComment }}
+  </p>
+
+
+
+
+
+
+
+
+
+
+ 
+</div>

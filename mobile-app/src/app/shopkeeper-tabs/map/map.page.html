@@ -1,0 +1,35 @@
+<!-- <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Shops</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+  <ion-searchbar
+  [(ngModel)]="autoCompleteOptions.input"
+  (ionInput)="updateSearchResults()"
+  placeholder="{{'PAGE_SHOPKEEPER_MAP_SEARCH_PLACEHOLDER' | translate}}"
+  [ngModelOptions]="{standalone: true}"
+>
+<ion-buttons slot="start">
+  <ion-back-button text="" defaultHref=""></ion-back-button>
+  
+</ion-buttons>
+<div class="loader">
+  <app-spinner *ngIf="loading"></app-spinner>
+</div>
+</ion-searchbar>
+
+
+<ion-list class="auto-complete-items">
+  <ion-item
+    *ngFor="let item of autoCompleteItems"
+    tappable
+    (click)="selectSearchResult(item)"
+  >
+    {{ item.description }}
+  </ion-item>
+</ion-list>
+  <div #map id="map"></div> 
+
+</ion-content>

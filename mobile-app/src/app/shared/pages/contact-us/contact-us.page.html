@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'PAGE_CONTACT_US_TITLE' | translate}}</ion-title>
+    <ion-buttons slot="end" class="ion-margin-end" *ngIf="loading">
+      <app-spinner></app-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="open"> {{'PAGE_CONTACT_US_OPEN' | translate}} </ion-segment-button>
+      <ion-segment-button value="closed"> {{'PAGE_CONTACT_US_CLOSE' | translate}} </ion-segment-button>
+      <ion-segment-button value="all"> {{'PAGE_CONTACT_US_ALL' | translate}} </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <div [ngSwitch]="type">
+    <ion-list class="ion-padding" *ngSwitchCase="'open'">
+      <p *ngIf="!openTickets || openTickets.length === 0"> {{'PAGE_CONTACT_US_INSTRUCTIONS_NO_OPEN_TICKET' | translate}}</p>
+      <ion-item [routerLink]="['/contact-us/view', ticket.id]"  *ngFor="let ticket of openTickets">
+        {{ticket.title}}
+      </ion-item>
+    </ion-list>
+
+    <ion-list class="ion-padding" *ngSwitchCase="'closed'">
+      <p *ngIf="!closedTickets || closedTickets.length === 0"> {{'PAGE_CONTACT_US_INSTRUCTIONS_NO_CLOSE_TICKET' | translate}}</p>
+      <ion-item *ngFor="let ticket of closedTickets">
+        {{ticket.title}}
+      </ion-item>
+    </ion-list>
+
+    <ion-list class="ion-padding" *ngSwitchCase="'all'">
+      <p *ngIf="!allTickets || allTickets.length === 0">{{'PAGE_CONTACT_US_NO_TICKET' | translate}}</p>
+      <ion-item *ngFor="let ticket of allTickets">
+        {{ticket.title}}
+      </ion-item>
+    </ion-list>
+  </div>
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/contact-us/add']" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

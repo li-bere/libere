@@ -1,0 +1,237 @@
+
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu *ngIf="!router.url.includes('/map')" contentId="main-content" type="overlay">
+      <ion-content>
+        <ion-list id="menu-list">
+          <!-- <ion-list-header
+            *ngIf="user && (user.firstName !== '' || user.lastName !== '')"
+            >{{ user.firstName }} {{ user.lastName }}</ion-list-header
+          > -->
+          <!-- <ion-list-header
+            *ngIf="user && user.firstName === '' && user.lastName === ''"
+            >{{'MODEL_USER_SIDEBAR_FULL_NAME_LABEL' | translate}}</ion-list-header
+          > -->
+            <div class="side-menu-top" *ngIf="userData">
+              <ion-avatar *ngIf="userData.displayPhoto">
+                <img src="{{ userData.displayPhoto }}">
+              </ion-avatar>
+              <ion-avatar *ngIf="!userData.displayPhoto">
+                <img src="/assets/img/profile-image-placeholder.png">
+              </ion-avatar>
+              <ion-note *ngIf="userData">{{ userData.username }}</ion-note>
+            </div>
+          
+
+          <ion-menu-toggle
+            auto-hide="false"
+            *ngFor="let p of appPages; let i = index"
+          >
+            <ion-item
+              (click)="selectedIndex = i"
+              routerDirection="root"
+              [routerLink]="[p.url]"
+              lines="none"
+              detail="false"
+              [class.selected]="selectedIndex == i"
+            >
+              <ion-icon
+                slot="start"
+                [ios]="p.icon + '-outline'"
+                [md]="p.icon"
+              ></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+       
+
+
+        <ion-list id="actions-list">
+          <ion-menu-toggle auto-hide="false">
+
+            <ion-item>
+              <!-- <ion-icon
+                slot="start"
+                ios="call-outline"
+                md="call"
+              ></ion-icon> -->
+              <ion-icon name="language"></ion-icon>
+              <ion-label class="ion-padding-start">{{'MODEL_USER_SIDEBAR_LANGUAGE_LABEL' | translate}}</ion-label>
+              <ion-select #s value="notifications" interface="action-sheet" (ionChange)="select(s.value);">
+                
+                <ion-select-option value="en" >{{'LANGUAGE_ENGLISH' | translate}}</ion-select-option>
+                <ion-select-option value="it" >{{'LANGUAGE_ITALIAN' | translate}}</ion-select-option>
+              </ion-select>
+              
+            </ion-item>
+
+        
+            <ion-item *ngIf= "isShopkeeper" >
+      
+              <ion-icon name="language"></ion-icon>
+              <ion-label class="ion-padding-start">Role</ion-label>
+              <ion-select #d value="notifications" interface="action-sheet" (ionChange)="Role(d.value)">
+                
+                <ion-select-option value="User" >User</ion-select-option>
+                <ion-select-option value="Shopkeeper" >Shopkeeper</ion-select-option>
+              </ion-select>
+              
+            </ion-item>
+
+            <!--adding last 5 transactions-->
+
+
+
+
+
+
+
+
+
+            <ion-item-divider>
+             
+                Recent Transactions
+             
+            </ion-item-divider>
+            <div class="recent" *ngIf="transactions">
+            <ion-item [style.border-right-color]="transaction.shopColor" *ngFor="let transaction of transactions">
+              
+                <ion-avatar>
+                  <ion-icon
+                    ios="add-circle-outline"
+                    md="add-circle"
+                    color="success"
+                    *ngIf="transaction.type === 'credit'"
+                  ></ion-icon>
+                  <ion-icon
+                    ios="remove-circle-outline"
+                    md="remove-circle"
+                    color="danger"
+                    *ngIf="transaction.type === 'debit'"
+                  ></ion-icon>
+                </ion-avatar>
+                <ion-label>
+                  <p *ngIf="transaction.description=='Buy'">{{"PAGE_TRANSACTION_BOTTLE_BUY" | translate}}</p>
+                  <p *ngIf="transaction.description=='Bottle Refill'">{{"PAGE_TRANSACTION_BOTTLE_REFILL" | translate}}</p>
+                  <p *ngIf="transaction.description=='Fund Transfer'">{{"PAGE_TRANSACTION_FUNDS_TRANSFER" | translate}}</p>
+                  <p *ngIf="transaction.description=='Bottle Registeration'">{{"PAGE_TRANSACTION_BOTTLE_REGISTERATION" | translate}}</p>
+                  <p *ngIf="transaction.description=='Shop Creation'">{{"PAGE_TRANSACTION_SHOP_CREATION" | translate}}</p>
+                  <p *ngIf="transaction.description=='Invitee'">{{"PAGE_TRANSACTION_INVITEE_BONUS_CREDIT" | translate}}</p>
+                  <p *ngIf="transaction.description=='Invited'">{{"PAGE_TRANSACTION_INVITED_BONUS_CREDIT" | translate}}</p>
+                  <p *ngIf="transaction.description=='Profile Completion Phone'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_PHONE" | translate}}</p>
+                  <p *ngIf="transaction.description=='Profile Completion Address'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_ADDRESS" | translate}}</p>
+                  <p *ngIf="transaction.description=='Profile Completion Date of Birth'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_DOB" | translate}}</p>
+                  <p *ngIf="transaction.description=='Profile Completion Last Name'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_LAST_NAME" | translate}}</p>
+                  <p *ngIf="transaction.description=='Profile Completion First Name'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_FIRST_NAME" | translate}}</p>
+                  <p *ngIf="transaction.shopName!=null">{{transaction.shopName}}</p>
+                  <p>
+                    <sub>
+                      <ion-text
+                        color="success"
+                        *ngIf="transaction.status === transactionStatus.COMPLETE"
+                        >{{"PAGE_SHOPKEEPER_TRANSACTION_COMPELETED_LABEL" | translate}}</ion-text
+                      >
+                      <ion-text 
+                        color="warning"
+                        *ngIf="transaction.status === transactionStatus.PENDING"
+                        >{{"PAGE_SHOPKEEPER_TRANSACTION_PENDING_LABEL" | translate}}</ion-text
+                      >
+                      <ion-text 
+                        color="danger"
+                        *ngIf="transaction.status === transactionStatus.CANCELED"
+                        >{{"PAGE_SHOPKEEPER_TRANSACTION_REJECTED_LABEL" | translate}}</ion-text
+                      >
+                      <ion-text
+                        color="danger"
+                        *ngIf="transaction.status === transactionStatus.REJECTED"
+                        >{{"PAGE_SHOPKEEPER_TRANSACTION_REJECTED_LABEL" | translate}}</ion-text
+                      >
+                    </sub>
+                  </p>
+                </ion-label>
+              
+       
+            </ion-item>
+          </div>
+
+          <div class="recent" *ngIf="!transactions">
+            <ion-item>
+              There are no recent transactions
+            </ion-item>
+          </div>
+
+
+
+
+
+
+
+
+          <ion-item (click)="tutorialShow()" lines="none" detail="false">
+            <ion-icon
+              slot="start"
+              ios="call-outline"
+              md="call"
+            ></ion-icon>
+            <ion-label>Tutorial</ion-label>
+          </ion-item>
+
+          <ion-item [routerLink]="['/ranking']" lines="none" detail="false">
+            <ion-icon
+              slot="start"
+              ios="call-outline"
+              md="call"
+            ></ion-icon>
+            <ion-label>Ranking</ion-label>
+          </ion-item>
+          <ion-item [routerLink]="['/shop-ranking']" lines="none" detail="false">
+            <ion-icon
+              slot="start"
+              ios="call-outline"
+              md="call"
+            ></ion-icon>
+            <ion-label>Shop Ranking</ion-label>
+          </ion-item>
+
+          <ion-item *ngIf="!isShopkeeper" (click)="requestUpgrade()"  lines="none" detail="false">
+            <ion-icon
+              slot="start"
+              ios="call-outline"
+              md="call"
+            ></ion-icon>
+            <ion-label>Request Upgrade</ion-label>
+          </ion-item>
+
+
+            <ion-item [routerLink]="['/contact-us']" lines="none" detail="false">
+              <ion-icon
+                slot="start"
+                ios="call-outline"
+                md="call"
+              ></ion-icon>
+              <ion-label>{{'MODEL_USER_SIDEBAR_CONTACT_US_LABEL' | translate}}</ion-label>
+            </ion-item>
+
+            <ion-item (click)="signOut()" lines="none" detail="false">
+              <ion-icon
+                slot="start"
+                ios="log-out-outline"
+                md="log-out"
+                color="danger"
+              ></ion-icon>
+              <ion-label color="danger">{{'MODEL_USER_SIDEBAR_SIGN_OUT_LABEL' | translate}}</ion-label>
+            </ion-item>
+
+
+
+
+
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

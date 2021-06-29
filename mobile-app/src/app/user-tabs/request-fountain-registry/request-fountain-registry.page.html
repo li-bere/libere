@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons> -->
+    <ion-title>{{'PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_TITLE' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="ion-margin-bottom">
+    <ion-card-header>
+      <ion-card-title class="title">{{'PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_HEADING_TITLE' | translate}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="fountainRegistryForm" (ngSubmit)="onSubmit()">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="card-outline"
+              md="card-sharp"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              type="text"
+              placeholder="{{'PAGE_USER_REQUEST_FOUNTAIN_REGISTRY_FOUNTAIN_NAME_PLACEHOLDER' | translate}}"
+              formControlName="name"
+            ></ion-input>
+          </ion-item>
+
+          <div *ngIf="name.invalid && (name.touched)" class="ion-text-start">
+            <ion-text color="danger" *ngIf="name.errors.required">
+              <p><sub>{{'PAGE_REQ_FOUNTAINS_NAME_REQUIRE' | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="name.errors.minlength">
+              <p><sub>{{"PAGE_ADD_TITLE_ERROR_TITLE_MIN_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="name.errors.maxlength">
+              <p><sub>{{"PAGE_REQ_FOUNTAINS_MAX_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="name.errors.pattern">
+              <p><sub>{{"PAGE_REQ_FOUNTAINS_ALPHABETS" | translate}}</sub></p>
+            </ion-text>
+          </div>
+
+          <app-location [form]="fountainRegistryForm" [address]="address">
+          </app-location>
+          <sub class="ion-margin-bottom">{{"PAGE_ADD_SHOP_LOCATION" | translate}}</sub>
+
+          <app-image-gallery
+            [isEditable]="true"
+            [imageList]="fountainPhotos" 
+            (onImagesUploaded)="addFountainImages($event)"
+            (onImagesDeleted)="removeFountainImages($event)">
+          </app-image-gallery>
+
+          <ion-button
+            fill="solid"
+            expand="block"
+            type="submit"
+            class="ion-margin-top ion-margin-bottom"
+            [disabled]="fountainRegistryForm.invalid || fountainPhotos.length == 0"
+          >
+          {{"PAGE_ADD_SHOP_REGISTER" | translate}}
+          </ion-button>
+        </ion-list>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

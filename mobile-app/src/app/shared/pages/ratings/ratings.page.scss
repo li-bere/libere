@@ -1,0 +1,32 @@
+ion-header {
+    &.header-md::after {
+      display: none;
+    }
+  
+    ion-toolbar {
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+  }
+ion-content {
+    #size-icon {
+        ion-icon {
+            font-size: 13px;
+        }
+    }
+    .rate-content {
+        h4 {
+            padding-left: 6px;
+        }
+
+    }
+    .para {
+        p {
+            padding-left: 6px;
+            // float: left;
+        }
+    }
+    p.no-rating {
+        text-align: center;
+    }
+}

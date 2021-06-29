@@ -1,0 +1,29 @@
+ion-content {
+  --ion-background-color: #f8f9fa;
+
+  .fullheight {
+    height: 100%;
+  }
+
+  .xc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  ion-item {
+    --background: #ffffff;
+    --border-width: 0;
+    --border-radius: 25px;
+  }
+  ion-item:nth-child(2) {
+    margin-bottom: 0;
+  }
+  sub {
+    padding-bottom: 16px;
+  }
+
+  ion-button {
+    --border-radius: 25px;
+  }
+}

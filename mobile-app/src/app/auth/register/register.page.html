@@ -1,0 +1,271 @@
+<ion-content class="ion-padding">
+  <div class="container">
+    
+    <div class="top-content img-text">
+      <img src="/assets/img/logo.png" alt="Logo" />
+      <h4>{{'PAGE_REGISTER_TITLE' | translate}}</h4>
+    </div>
+    <div class="bottom-content btns">
+      <form [formGroup]="form" (keyup.enter)="onSubmit()" #formDir="ngForm">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="mail-outline"
+              md="mail"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              type="email"
+              placeholder="{{'PAGE_REGISTER_EMAIL_PLACEHOLDER' | translate}}"
+              formControlName="email"
+            ></ion-input>
+          </ion-item>
+  
+          <div *ngIf="email.invalid && (email.touched)" class="ion-text-start">
+            <ion-text color="danger" *ngIf="email.errors.required">
+              <p><sub>{{"PAGE_REGISTER_ERROR_MSG_EMAIL_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="email.errors.pattern">
+              <p><sub>{{"PAGE_REGISTER_ERROR_MSG_EMAIL_INVALID" | translate}}</sub></p>
+            </ion-text>
+          </div>        
+  
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="lock-closed-outline"
+              md="lock-closed"
+              slot="start"
+              color="primary"
+            ></ion-icon>
+            <ion-input
+            clearOnEdit=false
+              required
+              [type]="passwordType"
+              placeholder="{{'PAGE_REGISTER_PASSWORD_PLACEHOLDER' | translate}}"
+              formControlName="password"
+            ></ion-input>
+            <ion-icon
+              slot="end"
+              [name]="passwordIcon"
+              class="password-icon"
+              (click)="hideShowPassword()"
+            ></ion-icon>
+          </ion-item>
+  
+          <div
+            *ngIf="password.invalid && (password.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="password.errors.required">
+              <p><sub>{{"PAGE_REGISTER_ERROR_MSG_EMAIL_INVALID" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="password.errors.minlength">
+              <p><sub>{{"PAGE_ADD_DESCRIPTION_ERROR_DESCRIPTION_MIN_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="password.errors.maxlength">
+              <p><sub>{{"PAGE_ADD_DESCRIPTION_ERROR_DESCRIPTION_MAX_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="password.errors.pattern">
+              <p>
+                <sub
+                  >{{"PAGE_REGISTER_ERROR_MSG_PASSWORD_CHARECTERS_LIMIT_INVALID" | translate}}</sub
+                >
+              </p>
+            </ion-text>
+          </div>
+  
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="lock-closed-outline"
+              md="lock-closed"
+              slot="start"
+              color="primary"
+            ></ion-icon>
+            <ion-input
+            clearOnEdit=false
+              required
+              [type]="passwordType"
+              placeholder="{{'PAGE_REGISTER_CONFIRM_PASSWORD_PLACEHOLDER' | translate}}"
+              formControlName="confirmPassword"
+            ></ion-input>
+            <ion-icon
+              slot="end"
+              [name]="passwordIcon"
+              class="password-icon"
+              (click)="hideShowPassword()"
+            ></ion-icon>
+          </ion-item>
+  
+          <div
+            class="ion-text-start"
+            *ngIf="form.errors?.matchPassword && (form.touched) && 
+            (confirmPassword.touched || confirmPassword.dirty)"
+          >
+            <ion-text color="danger">
+              <p><sub>{{"PAGE_SETTING_ERROR_MSG_PASSWORD_NOT_MATCH" | translate }}</sub></p>
+            </ion-text>
+          </div>
+        </ion-list>
+  
+        <ion-text color="dark" class="ion-text-left">
+          <sub (click)="policy()">
+            <!-- By signing up, you agree to our <a>Terms of use</a> and
+            <a>Privacy Policy</a>, including <a>Cookie Use</a>. -->
+            {{'PAGE_REGISTER_DESCRIPTION_SIGNUP' | translate}}
+          </sub>
+        
+        </ion-text>
+  
+        <ion-button
+          fill="solid"
+          expand="block"
+          shape="round"
+          (click)="onSubmit()"
+          class="ion-margin-top ion-margin-bottom"
+          [disabled]="form.invalid"
+        >
+          {{'PAGE_REGISTER_REGISTER_BUTTON' | translate}}
+        </ion-button>
+      </form>
+      <div class="ion-text-center ion-margin-bottom">
+        {{'PAGE_REGISTER_LABEL_ALREADY_ACCOUNT' | translate}} <a [routerLink]="['/auth/login']">{{'PAGE_REGISTER_BUTTON_LOGIN' | translate}}</a>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<!-- <ion-content class="ion-padding-horizontal ion-padding-bottom">
+  <div class="fullheight xc">
+    <div class="ion-text-center">
+      <img src="/assets/img/logo.png" alt="Logo" />
+      <h5>Create Your Account</h5>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDir="ngForm">
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">
+        <ion-item class="ion-margin-bottom">
+          <ion-icon
+            ios="mail-outline"
+            md="mail"
+            slot="start"
+            color="primary"
+            class="ion-align-self-center"
+          ></ion-icon>
+          <ion-input
+            required
+            type="email"
+            placeholder="Email"
+            formControlName="email"
+          ></ion-input>
+        </ion-item>
+
+        <div *ngIf="email.invalid && (email.touched)" class="ion-text-start">
+          <ion-text color="danger" *ngIf="email.errors.required">
+            <p><sub>Email is required.</sub></p>
+          </ion-text>
+          <ion-text color="danger" *ngIf="email.errors.pattern">
+            <p><sub>Email is not valid.</sub></p>
+          </ion-text>
+        </div>        
+
+        <ion-item class="ion-margin-bottom">
+          <ion-icon
+            ios="lock-closed-outline"
+            md="lock-closed"
+            slot="start"
+            color="primary"
+          ></ion-icon>
+          <ion-input
+            required
+            [type]="passwordType"
+            placeholder="Password"
+            formControlName="password"
+          ></ion-input>
+          <ion-icon
+            slot="end"
+            [name]="passwordIcon"
+            class="password-icon"
+            (click)="hideShowPassword()"
+          ></ion-icon>
+        </ion-item>
+
+        <div
+          *ngIf="password.invalid && (password.touched)"
+          class="ion-text-start"
+        >
+          <ion-text color="danger" *ngIf="password.errors.required">
+            <p><sub>Password is required.</sub></p>
+          </ion-text>
+          <ion-text color="danger" *ngIf="password.errors.minlength">
+            <p><sub>Must have at least 8 characters.</sub></p>
+          </ion-text>
+          <ion-text color="danger" *ngIf="password.errors.maxlength">
+            <p><sub>Must have at most 100 characters.</sub></p>
+          </ion-text>
+          <ion-text color="danger" *ngIf="password.errors.pattern">
+            <p>
+              <sub
+                >Must have at least one alphabet and one numeric character.</sub
+              >
+            </p>
+          </ion-text>
+        </div>
+
+        <ion-item class="ion-margin-bottom">
+          <ion-icon
+            ios="lock-closed-outline"
+            md="lock-closed"
+            slot="start"
+            color="primary"
+          ></ion-icon>
+          <ion-input
+            required
+            [type]="passwordType"
+            placeholder="Confirm Password"
+            formControlName="confirmPassword"
+          ></ion-input>
+          <ion-icon
+            slot="end"
+            [name]="passwordIcon"
+            class="password-icon"
+            (click)="hideShowPassword()"
+          ></ion-icon>
+        </ion-item>
+
+        <div
+          class="ion-text-start"
+          *ngIf="form.errors?.matchPassword && (form.touched) && 
+          (confirmPassword.touched || confirmPassword.dirty)"
+        >
+          <ion-text color="danger">
+            <p><sub>Passwords do not match.</sub></p>
+          </ion-text>
+        </div>
+      </ion-list>
+
+      <ion-text color="dark" class="ion-text-left">
+        <sub>
+          By signing up, you agree to our <a>Terms of use</a> and
+          <a>Privacy Policy</a>, including <a>Cookie Use</a>.
+        </sub>
+      </ion-text>
+
+      <ion-button
+        fill="solid"
+        expand="block"
+        type="submit"
+        class="ion-margin-top ion-margin-bottom"
+        [disabled]="form.invalid"
+      >
+        Register
+      </ion-button>
+    </form>
+
+    <div class="ion-text-center">
+      Already have an account? <a [routerLink]="['/login']">Login</a>
+    </div>
+  </div>
+</ion-content> -->

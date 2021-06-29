@@ -1,0 +1,189 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'PAGE_USER_HOME_TITLE' | translate }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/user-tabs/bottles/add']" joyrideStep="seventhStep" title="{{'PAGE_USER_TUTORIAL_STEP_SEVEN_TITLE' | translate}}" text="{{'PAGE_USER_TUTORIAL_STEP_SEVEN_DETAILS' | translate}}">
+        <ion-icon
+        ios="wine-outline"
+        md="wine-outline"
+        
+      ></ion-icon>
+      </ion-button>
+
+      <ion-button [routerLink]="['/user-tabs/request-fountain-registry']" joyrideStep="eighthStep" title="{{'PAGE_USER_TUTORIAL_STEP_EIGHT_TITLE' | translate}}" text="{{'PAGE_USER_TUTORIAL_STEP_EIGHT_DETAILS' | translate}}">
+        <ion-icon ios="water-outline" md="water-sharp" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+ 
+
+  </ion-toolbar>
+
+  <!-- <ion-toolbar class="footer">
+    <ion-card class="ion-no-margin">
+      <ion-card-content>
+        <a [routerLink]="['/user-tabs/bottles/add']">
+          <ion-icon
+            ios="wine-outline"
+            md="wine-outline"
+            color="primary"
+          ></ion-icon>
+          <p class="ion-no-margin">{{ 'PAGE_USER_HOME_REGISTER_BOTTLE_BUTTON' | translate }}</p>
+        </a>
+        <a [routerLink]="['/user-tabs/request-fountain-registry']">
+          <ion-icon ios="water-outline" md="water-sharp" color="primary"></ion-icon>
+          <p class="ion-no-margin">{{ 'PAGE_USER_HOME_SUGGEST_FOUNTAINS_BUTTON' | translate }}</p>
+        </a>
+      </ion-card-content>
+    </ion-card>
+  </ion-toolbar> -->
+
+</ion-header>
+<ion-content>
+
+
+  
+  <ion-card>
+    <ion-card-content class="user-info">
+      <ion-row>
+        <ion-col size="6" class="ion-no-padding">
+          <ion-item
+            lines="none"
+            class="user-info-item"
+            [routerLink]="['/user-tabs/profile']"
+          >
+            <ion-avatar slot="start">
+              <ion-img
+                [src]="user.displayPhoto"
+                *ngIf="user && user.displayPhoto"
+              ></ion-img>
+              <img
+                src="/assets/img/profile-image-placeholder.png"
+                alt="Photo"
+                *ngIf="user && !user.displayPhoto"
+              />
+            </ion-avatar>
+            <ion-label>
+              <h2
+                *ngIf="user && (user.firstName !== '' || user.lastName !== '')"
+              >
+                {{ user.firstName }} {{ user.lastName }}
+              </h2>
+              <h2 *ngIf="user && user.firstName === '' && user.lastName === ''">
+                Full Name
+              </h2>
+              <p>
+                <ion-text color="primary" *ngIf="user"
+                  >@{{user.username}}</ion-text
+                >
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="6" class="ion-no-padding">
+          <ion-item lines="none">
+            <ion-thumbnail slot="start">
+              <img src="/assets/img/coins.png" alt="Coins Image" />
+            </ion-thumbnail>
+            <ion-label>
+              <h2 *ngIf="user && user.credit">{{user.credit}} {{'PAGE_USER_HOME_CREDITS_LABEL' | translate}}</h2>
+              <h2 *ngIf="user && !user.credit">0 {{'PAGE_USER_HOME_CREDITS_LABEL' | translate}}</h2>
+              <p [routerLink]="['/user-tabs/transactions']">
+                <ion-text color="primary">{{'PAGE_USER_HOME_TRANSACTIONS_LABEL' | translate}}</ion-text>
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+    <!-- <ion-item>
+      <ion-icon name="sunny" *ngIf="darkValue" color="primary"></ion-icon>
+      <ion-icon name="moon" *ngIf="!darkValue" color="primary"></ion-icon>
+      <ion-toggle [(ngModel)]="darkValue" [checked]="darkValue" (ionChange)="onChange($event)"></ion-toggle>
+    </ion-item> -->
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">
+                CO2
+              </ion-label>
+              {{co2}}
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">
+                PLA
+              </ion-label>
+              {{pla}}
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <p class="ion-padding ion-no-margin">
+    <ion-text color="primary">{{ 'PAGE_USER_HOME_RECENT_REFILLS_LABEL' | translate}}</ion-text>
+  </p>
+
+  <ion-list class="ion-no-padding">
+    <p class="ion-no-margin ion-padding" *ngIf="refills && refills.length === 0">
+      {{'PAGE_USER_HOME_NO_REFILLS_LABEL' | translate}}
+    </p>
+    <ion-card *ngFor="let refill of refills">
+      <ion-card-content>
+        <ion-item lines="none" class="refill">
+          <ion-avatar slot="start" >
+            <ion-img
+              [src]="refill.shopDisplayPicture"
+              *ngIf="refill.shopDisplayPicture"
+            ></ion-img>
+            <img
+              src="/assets/img/profile-image-placeholder.png"
+              alt="Photo"
+              *ngIf="!refill.shopDisplayPicture"
+            />
+          </ion-avatar>
+          <ion-label>
+            <h4>
+              <ion-text color="primary" class="ion-text-capitalize" (click)="gotoShopkeeperProfile(refill.shopId)"
+                >{{refill.shopName}}</ion-text
+              >
+            </h4>
+            <p *ngIf="refill.shopkeeperDisplayName">{{refill.shopkeeperDisplayName}}</p>
+            <p *ngIf="!refill.shopkeeperDisplayName">Full Name</p>
+          </ion-label>
+          <ion-label slot="end" class="ion-text-center">
+            <h3>{{refill.amount}} LiCoin</h3>
+            <ion-button expand="block" (click)="getDirections(refill.shopId)"
+              >{{"PAGE_USER_HOME_DIRECTIONS_BUTTON" | translate}}</ion-button
+            >
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="ion-text-center ion-margin-bottom" *ngIf="refills && refills.length > 0">
+      <a
+        [routerLink]="['/user-tabs/transactions']"
+        [state]="{ type: 'refill', reason: 'refill' }"
+        ><ion-text color="primary">{{ 'PAGE_USER_HOME_SEE_MORE_BUTTON' | translate }}</ion-text></a
+      >
+    </div>
+  </ion-list>
+  <!-- <div id="step1">
+    // content you would like to highlight
+</div> -->
+</ion-content>
+
+

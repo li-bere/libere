@@ -1,0 +1,71 @@
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+ion-content{
+    ion-card {
+        --background: #ffffff;
+        border-radius: 20px;
+    
+        ion-card-content {
+          padding: 10px;
+          .content-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 20px;
+            padding-right: 20px;
+    
+            p {
+              font-size: 18px;
+              color: #707070;
+            }
+          }
+        }
+    
+        ion-item {
+          --padding-start: 0;
+          --padding-end: 0;
+          --inner-padding-end: 0;
+          --background: #ffffff;
+        }
+    
+        .user-info {
+          ion-item {
+            --padding-top: 10px;
+            --padding-bottom: 10px;
+            --padding-start: 10px;
+            --padding-end: 10px;
+    
+            &.user-info-item {
+              border-radius: 20px;
+              --background: var(--ion-color-light);
+            }
+          }
+        }
+        .border-left {
+          border-left: 1px solid #707070;
+        }
+      }
+}
+.ranking-data {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  .rank-img {
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+}
+.ranking-head {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: bolder;
+}

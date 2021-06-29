@@ -1,0 +1,229 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'PAGE_SETTING_TITLE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-margin-bottom">
+    <form
+      [formGroup]="emailForm"
+      (ngSubmit)="onEmailSubmit()"
+      #formDir="ngForm"
+    >
+      <ion-card-header>
+        <ion-row class="ion-align-items-center">
+          <ion-col>
+            <span class="title">{{"PAGE_SETTING_EMAIL_LABEL" | translate}}</span>
+          </ion-col>
+          <ion-col class="ion-text-right">
+            <app-spinner *ngIf="emailFormLoading"></app-spinner>
+            
+          </ion-col>
+        </ion-row>
+       
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="mail-outline"
+              md="mail"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              type="email"
+              placeholder="{{'PAGE_SETTING_EMAIL_PLACEHOLDER' | translate}}"
+              formControlName="email"
+            ></ion-input>
+          </ion-item>
+
+          <div *ngIf="email.invalid && (email.touched)" class="ion-text-start">
+            <ion-text color="danger" *ngIf="email.errors.required">
+              <p><sub>{{"PAGE_SETTING_ERROR_MSG_EMAIL_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="email.errors.pattern">
+              <p><sub>{{"PAGE_SETTING_ERROR_MSG_EMAIL_INVALID" | translate}}</sub></p>
+            </ion-text>
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="lock-closed-outline"
+              md="lock-closed"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              clearOnEdit=false
+              [type]="emailPasswordType"
+              placeholder="{{'PAGE_SETTING_PASSWORD_PLACEHOLDER' | translate}}"
+              formControlName="password"
+            ></ion-input>
+            <ion-icon
+            slot="end"
+            [name]="emailPasswordIcon"
+            class="password-icon"
+            (click)="hideShowEmailPassword()"
+          ></ion-icon>
+          </ion-item>
+
+          <div
+            *ngIf="emailPassword.invalid && (emailPassword.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="emailPassword.errors.required">
+              <p><sub>{{"PAGE_SETTING_ERROR_MSG_PASSWORD_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+          </div>
+        </ion-list>
+         <ion-button expand="block" color="primary" fill="clear"  type="submit"
+        >{{'PAGE_SETTING_SAVE_BUTTON' | translate}}</ion-button>
+      </ion-card-content>
+    </form>
+  </ion-card>
+
+  <ion-card class="ion-margin-bottom">
+    <form
+      [formGroup]="passwordForm"
+      (ngSubmit)="onPasswordSubmit()"
+      #formDir="ngForm"
+    >
+      <ion-card-header>
+        <ion-row class="ion-align-items-center">
+          <ion-col>
+            <span class="title"> {{"PAGE_SETTING_PASSWORD_PLACEHOLDER" | translate }}</span>
+          </ion-col>
+          <ion-col class="ion-text-right">
+            <app-spinner *ngIf="passwordFormLoading"></app-spinner>
+            
+          </ion-col>
+        </ion-row>
+        
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="lock-closed-outline"
+              md="lock-closed"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              clearOnEdit=false
+              [type]="oldPasswordType" 
+              placeholder= "{{'PAGE_SETTING_OLD_PASSWORD' | translate}}"
+              formControlName="oldPassword"
+            ></ion-input>
+            <ion-icon
+            slot="end"
+            [name]="oldPasswordIcon"
+            class="password-icon"
+            (click)="hideShowOldPassword()"
+          ></ion-icon>
+          </ion-item>
+
+          <div
+            *ngIf="oldPassword.invalid && (oldPassword.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="oldPassword.errors.required">
+              <p><sub>{{'PAGE_SETTING_ERROR_MSG_PASSWORD_REQUIRED' | translate}}</sub></p>
+            </ion-text>
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="lock-closed-outline"
+              md="lock-closed"
+              slot="start"
+              color="primary"
+            ></ion-icon>
+            <ion-input
+              required
+              clearOnEdit=false
+              [type]="newPasswordType"
+              placeholder="{{'PAGE_SETTING_NEW_PASSWORD'|translate }}"  
+              formControlName="password"
+            ></ion-input>
+            <ion-icon
+            slot="end"
+            [name]="newPasswordIcon"
+            class="password-icon"
+            (click)="hideShowNewPassword()"
+          ></ion-icon>
+          </ion-item>
+
+          <div
+            *ngIf="password.invalid && (password.touched)"
+            class="ion-text-start"
+          >
+            <ion-text color="danger" *ngIf="password.errors.required">
+              <p><sub>{{"PAGE_SETTING_ERROR_MSG_PASSWORD_REQUIRED" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="password.errors.minlength">
+              <p><sub>{{"PAGE_SETTING_ERROR_MSG_PASSWORD_CHARECTERS_MIN_LENGHT_INVALID" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="password.errors.maxlength">
+              <p><sub>{{"PAGE_SETTING_ERROR_MSG_PASSWORD_CHARECTERS_MAX_LENGHT_INVALID" | translate}}</sub></p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="password.errors.pattern">
+              <p>
+                <sub
+                  >{{"PAGE_SETTING_ERROR_MSG_PASSWORD_CHARECTERS_LIMIT_INVALID" | translate}}</sub
+                >
+              </p>
+            </ion-text>
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="lock-closed-outline"
+              md="lock-closed"
+              slot="start"
+              color="primary"
+            ></ion-icon>
+            <ion-input
+              required
+              clearOnEdit=false
+              [type]="newPasswordType"
+              placeholder="{{'PAGE_SETTING_CONFIRM_PASSWORD_PLACEHOLDER' | translate}}" 
+              formControlName="confirmPassword"
+            ></ion-input>
+            <ion-icon
+            slot="end"
+            [name]="newPasswordIcon"
+            class="password-icon"
+            (click)="hideShowNewPassword()"
+          ></ion-icon>
+          </ion-item>
+
+          <div
+            class="ion-text-start"
+            *ngIf="passwordForm.errors?.matchPassword && (passwordForm.touched) && 
+            (confirmPassword.touched || confirmPassword.dirty)"
+          >
+            <ion-text color="danger">
+              <p><sub>{{"PAGE_SETTING_ERROR_MSG_PASSWORD_NOT_MATCH" | translate}}.</sub></p>
+            </ion-text>
+          </div>
+        </ion-list>
+      </ion-card-content>
+    </form>
+    <ion-button expand="block" color="primary" fill="clear"  type="submit"
+    >{{'PAGE_SETTING_SAVE_BUTTON' | translate}}</ion-button>
+  </ion-card>
+</ion-content>

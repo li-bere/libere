@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'PAGE_VIEW_TITLE' | translate}}</ion-title>
+    <ion-buttons slot="end" class="ion-margin-end" *ngIf="loading">
+      <app-spinner></app-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="primary" class="info" *ngIf="ticket">
+    <ion-card-title class="ion-padding">{{ticket.title}}</ion-card-title>
+    <ion-card-content>
+      <p>{{ticket.description}}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="ion-padding chat">
+    <h5 class="ion-text-center">Chat</h5>
+    <div *ngFor="let msg of msgs">
+      <div flex flow-right *ngIf="msg.uid === userId">
+        <ion-card
+          class="user"
+          [ngClass]="{'sending': msg.status === 'sending', 'failed': msg.status === 'failed'}"
+        >
+          <ion-card-content>
+            {{ msg.msg }}
+            <p class="ion-text-right ion-no-margin" *ngIf="msg.createdAt">
+              {{msg.createdAt.toDate() | date:'h:mm'}}
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <div flex *ngIf="msg.uid !== userId">
+        <ion-card bg-white>
+          <ion-card-content>
+            {{ msg.msg }}
+            <p class="ion-text-right ion-no-margin">
+              {{msg.createdAt.toDate() | date:'h:mm'}}
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-input [(ngModel)]="msg" placeholder="Type here..."></ion-input>
+    <ion-icon
+      class="ion-padding"
+      ios="send-outline"
+      md="send"
+      color="primary"
+      slot="end"
+      (click)="sendMsg()"
+    ></ion-icon>
+  </ion-toolbar>
+</ion-footer>

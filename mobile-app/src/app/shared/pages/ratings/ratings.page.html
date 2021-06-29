@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>All Ratings</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="ratingsLoaded">
+    <ion-list>
+      <ion-item *ngFor="let rating of allRatings">
+        <ion-avatar slot="start">
+          <img [src]="rating.userDisplayPicture">
+        </ion-avatar>
+        <ion-label>
+          <div class="rate-content">
+          
+            <h4>{{ rating.userName }}</h4>
+            <rating [(ngModel)]="rating.rateValue" readonly="true" size="default" id="size-icon"></rating>
+            
+          </div>
+          <div class="para">
+            <p>{{ rating.comment }}</p>
+          </div>
+    
+        </ion-label>
+        
+      </ion-item>
+    </ion-list>
+    
+  </div>
+  <div *ngIf="!ratingsLoaded || allRatings.length === 0"><p class="no-rating">No ratings for this shop</p></div>
+
+</ion-content>

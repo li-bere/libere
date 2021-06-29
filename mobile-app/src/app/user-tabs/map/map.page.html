@@ -1,0 +1,97 @@
+<!-- <ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-searchbar
+    [(ngModel)]="autoCompleteOptions.input"
+    (ionInput)="updateSearchResults()"
+    placeholder="{{'PAGE_USER_MAP_SEARCH_PLACEHOLDER' | translate}}"
+    [ngModelOptions]="{standalone: true}"
+  >
+  <ion-buttons slot="start">
+    <ion-back-button text="" defaultHref=""></ion-back-button>
+  </ion-buttons>
+  <div class="loader">
+    <app-spinner *ngIf="loading"></app-spinner>
+  </div>
+  </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content [fullscreen]="false">
+  <div class="stripe" *ngIf="!isBottleAvailable">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="10"><ion-text>{{"PAGE_USER_MAP_WARNING" | translate}} <a [routerLink]="['/user-tabs/bottles/add']">{{"PAGE_USER_MAP_WARNING1" | translate}}</a></ion-text></ion-col>
+        <ion-col size="2">
+          <ion-buttons>
+            <ion-button (click)="bottleAvailable()">
+              <ion-icon name="close"></ion-icon> 
+            </ion-button>
+          </ion-buttons>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+
+<ion-list class="auto-complete-items">
+  <ion-item
+    *ngFor="let item of autoCompleteItems"
+    tappable
+    (click)="selectSearchResult(item)"
+  >
+    {{ item.description }}
+  </ion-item>
+</ion-list>
+
+
+  <div #map id="map"></div> 
+
+</ion-content> -->
+
+<ion-content>
+  <ion-searchbar
+  [(ngModel)]="autoCompleteOptions.input"
+  (ionInput)="updateSearchResults()"
+  placeholder="{{'PAGE_SHOPKEEPER_MAP_SEARCH_PLACEHOLDER' | translate}}"
+  [ngModelOptions]="{standalone: true}"
+>
+<ion-buttons slot="start">
+  <ion-back-button text="" defaultHref=""></ion-back-button>
+  
+</ion-buttons>
+<div class="loader">
+  <app-spinner *ngIf="loading"></app-spinner>
+</div>
+</ion-searchbar>
+
+<div class="stripe" *ngIf="!isBottleAvailable">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="10"><ion-text>{{"PAGE_USER_MAP_WARNING" | translate}} <a [routerLink]="['/user-tabs/bottles/add']">{{"PAGE_USER_MAP_WARNING1" | translate}}</a></ion-text></ion-col>
+      <ion-col size="2">
+        <ion-buttons>
+          <ion-button (click)="bottleAvailable()">
+            <ion-icon name="close"></ion-icon> 
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+
+<ion-list class="auto-complete-items">
+  <ion-item
+    *ngFor="let item of autoCompleteItems"
+    tappable
+    (click)="selectSearchResult(item)"
+  >
+    {{ item.description }}
+  </ion-item>
+</ion-list>
+  <div #map id="map"></div> 
+
+</ion-content>

@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <span
+      class="spinner-border"
+      role="status"
+      *ngIf="loadingSpinner"
+      aria-hidden="true"
+    ></span>
+  </div>
+  <div *ngIf="!loadingSpinner" class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <label class="label-default font-weight-bold">Users</label>
+        </div>
+        <div class="card-body align-content-center">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Avatar</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Type</th>
+                  <th>Created At</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of usersData">
+                  <td>
+                    <img
+                      src="{{ user.displayPhoto }}"
+                      class="user-img img-circle"
+                      style="width: 60px; height: 60px"
+                      onerror="this.src='./../../../assets/img/avatars/avatar-placeholder.png'"
+                    />
+                  </td>
+                  <td class="text-capitalize">
+                    {{ user.firstName + " " + user.lastName }}
+                  </td>
+                  <td>{{ user.phone?.internationalNumber }}</td>
+                  <td>{{ user.email }}</td>
+                  <td class="text-capitalize">{{ obj.keys(user.roles) }}</td>
+                  <td>{{ user.createdAt.toDate() | date }}</td>
+                  <td>
+                    <button
+                      class="btn btn-info"
+                      [routerLink]="['view-user']"
+                      [queryParams]="{ id: user.id }"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                    <button
+                      class="btn btn-danger"
+                      (click)="showUserDeleteConfirmationModal(user)"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </button>
+                    <button
+                      *ngIf="!user.isBlocked"
+                      class="btn btn-dark"
+                      (click)="showToggleUserBlockModal(user.id, true)"
+                    >
+                      <i class="fa fa-lock"></i>
+                    </button>
+                    <button
+                      *ngIf="user.isBlocked"
+                      class="btn btn-dark"
+                      (click)="showToggleUserBlockModal(user.id, false)"
+                    >
+                      <i class="fa fa-unlock"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

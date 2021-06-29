@@ -1,0 +1,61 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ data?.title }}</h4>
+  <button
+    type="button"
+    class="btn shadow-none"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p *ngIf="data?.content">{{ data?.content }}</p>
+  <form
+    *ngIf="
+      data?.type == modalTypes.feeCreation || data?.type == modalTypes.feeEdit
+    "
+    [formGroup]="feeCreationForm"
+  >
+    <div class="form-group">
+      <label>Name</label>
+      <input class="form-control" type="text" formControlName="name" />
+    </div>
+    <div class="form-group">
+      <label>Value</label>
+      <input class="form-control" type="text" formControlName="value" />
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <div *ngIf="data?.type == modalTypes.confirmation">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="activeModal.dismiss('cancelled')"
+    >
+      No
+    </button>
+    <button type="button" class="btn btn-danger" (click)="activeModal.close()">
+      Yes
+    </button>
+  </div>
+
+  <div
+    *ngIf="
+      data?.type == modalTypes.feeCreation || data?.type == modalTypes.feeEdit
+    "
+  >
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="activeModal.dismiss('cancelled')"
+    >
+      Cancel
+    </button>
+    <button type="button" class="btn btn-primary" (click)="updateFee()">
+      {{ data?.type == modalTypes.feeCreation ? "Create" : "Update" }}
+    </button>
+  </div>
+</div>

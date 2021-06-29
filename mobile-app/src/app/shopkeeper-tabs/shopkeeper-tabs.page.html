@@ -1,0 +1,41 @@
+<ion-tabs>
+  <div class="shopkeeper" joyrideStep="firstStep" title="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_ONE_TITLE' | translate}}" text="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_ONE_DETAILS' | translate}}"></div>
+  <ion-fab vertical="bottom" horizontal="center" *ngIf="showScanButton" class="gotoMapsPage">
+    <ion-fab-button (click)="goToMaps()" joyrideStep="secondStep" title="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_TWO_TITLE' | translate}}" text="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_TWO_DETAILS' | translate}}">
+      <ion-icon ios="earth-outline" md="earth"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-tab-bar slot="bottom" class="ion-no-border">
+    <ion-tab-button tab="home" joyrideStep="thirdStep" title="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_THREE_TITLE' | translate}}" text="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_THREE_DETAILS' | translate}}">
+      <ion-icon ios="home-outline" md="home"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="transactions" class="transactions" joyrideStep="fourthStep" title="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_FOUR_TITLE' | translate}}" text="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_FOUR_DETAILS' | translate}}">
+      <ion-icon ios="cash-outline" md="cash"></ion-icon>
+    </ion-tab-button>
+
+    <svg
+      height="50"
+      viewBox="0 0 100 50"
+      width="100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M100 0v50H0V0c.543 27.153 22.72 49 50 49S99.457 27.153 99.99 0h.01z"
+        fill="red"
+        fill-rule="evenodd"
+      ></path>
+    </svg>
+
+    <ion-tab-button (click)="scanCode()" class="gotoScan" joyrideStep="fifthStep" title="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_FIVE_TITLE' | translate}}" text="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_FIVE_DETAILS' | translate}}">
+      <ion-icon ios="qr-code-outline" md="qr-code"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="profile" class="profile" joyrideStep="sixthStep" title="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_SIX_TITLE' | translate}}" text="{{'PAGE_SHOPKEEPER_TUTORIAL_STEP_SIX_DETAILS' | translate}}">
+      <ion-icon
+        [ngStyle]="{'background-image': user && user.displayPhoto ? 'url(' + user.displayPhoto + ')' : 'url(\'assets/img/profile-image-placeholder.png\')'}"
+      ></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

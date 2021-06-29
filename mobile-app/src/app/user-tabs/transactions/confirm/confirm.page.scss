@@ -1,0 +1,39 @@
+ion-header {
+  &.header-md::after {
+    display: none;
+  }
+
+  ion-toolbar {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+}
+
+ion-content {
+  --ion-background-color: var(--ion-color-light);
+
+  ion-button {
+    --border-radius: 25px;
+  }
+
+  .details {
+    p {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    h4, h5 {
+      margin-top: 0px;
+      margin-bottom: 25px;
+    }
+  }
+
+  .fullheight {
+    height: 100%;
+  }
+
+  .xc {
+    display: flex;
+    flex-direction: column;
+  }
+}

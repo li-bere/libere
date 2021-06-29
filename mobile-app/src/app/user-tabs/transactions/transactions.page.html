@@ -1,0 +1,310 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{'PAGE_USER_TRANSACTIONS_TITLE'  | translate }}</ion-title>
+    <ion-buttons slot="end" class="ion-margin-end">
+      <app-spinner *ngIf="loading"></app-spinner>
+      <p class="ion-margin-start"><strong>{{'PAGE_USER_HOME_CREDITS_LABEL' | translate}}: </strong>{{ totalCredit }}</p>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content  >
+  <!-- <div  *ngIf="emailVerified"> -->
+    <div >
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="all"> {{'PAGE_USER_TRANSACTION_ALL_BUTTON' | translate}} </ion-segment-button>
+      <ion-segment-button value="credit"> {{'PAGE_USER_TRANSACTION_CREDIT_BUTTON' | translate}} </ion-segment-button>
+      <ion-segment-button value="debit"> {{'PAGE_USER_TRANSACTION_DEBIT_BUTTON' | translate}} </ion-segment-button>
+      <ion-segment-button value="refill"> {{'PAGE_USER_TRANSACTION_REFILL_BUTTON' | translate}} </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <div [ngSwitch]="type">
+    <ion-list *ngSwitchCase="'all'">
+      <p
+        class="ion-padding"
+        *ngIf="allTransactions && allTransactions.length === 0"
+      >
+      {{'PAGE_USER_TRANSACTION_NO_TRANSACTIONS' | translate}}
+      </p>
+
+      
+     
+     
+        <ion-item   [style.border-right-color]="transaction.shopColor" *ngFor="let transaction of allTransactions" (click)="viewTransactionDetails(transaction.id)">
+        
+           <ion-avatar >
+             <ion-icon
+               ios="add-circle-outline"
+               md="add-circle"
+               color="success"
+               *ngIf="transaction.type === 'credit'"
+             ></ion-icon>
+             <ion-icon
+               ios="remove-circle-outline"
+               md="remove-circle"
+               color="danger"
+               *ngIf="transaction.type === 'debit'"
+             ></ion-icon>
+           </ion-avatar>
+             <ion-avatar >
+               <ion-text   color="primary">{{transaction.amount}} </ion-text>
+             </ion-avatar>
+           <ion-label>
+             <!-- <h4>
+               <ion-text color="primary" class="ion-text-capitalize"
+                 >{{transaction.type}}</ion-text
+               >
+             </h4> -->
+             
+             <p *ngIf="transaction.description=='Buy'">{{"PAGE_TRANSACTION_BOTTLE_BUY" | translate}}</p>
+             <p *ngIf="transaction.description=='Bottle Refill'">{{"PAGE_TRANSACTION_BOTTLE_REFILL" | translate}}</p>
+             <p *ngIf="transaction.description=='Fund Transfer'">{{"PAGE_TRANSACTION_FUNDS_TRANSFER" | translate}}</p>
+             <p *ngIf="transaction.description=='Bottle Registeration'">{{"PAGE_TRANSACTION_BOTTLE_REGISTERATION" | translate}}</p>
+             <p *ngIf="transaction.description=='Shop Creation'">{{"PAGE_TRANSACTION_SHOP_CREATION" | translate}}</p>
+             <p *ngIf="transaction.description=='Invitee'">{{"PAGE_TRANSACTION_INVITEE_BONUS_CREDIT" | translate}}</p>
+             <p *ngIf="transaction.description=='Invited'">{{"PAGE_TRANSACTION_INVITED_BONUS_CREDIT" | translate}}</p>
+             <p *ngIf="transaction.description=='Profile Completion Phone'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_PHONE" | translate}}</p>
+             <p *ngIf="transaction.description=='Profile Completion Address'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_ADDRESS" | translate}}</p>
+             <p *ngIf="transaction.description=='Profile Completion Date of Birth'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_DOB" | translate}}</p>
+             <p *ngIf="transaction.description=='Profile Completion Last Name'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_LAST_NAME" | translate}}</p>
+             <p *ngIf="transaction.description=='Profile Completion First Name'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_FIRST_NAME" | translate}}</p>
+             <p *ngIf="transaction.shopName!=null">{{transaction.shopName}}</p>
+             <p>
+               <sub>
+                 <ion-text
+                   color="success"
+                   *ngIf="transaction.status === 'COMPLETE'"
+                   >{{"PAGE_SHOPKEEPER_TRANSACTION_COMPELETED_LABEL" | translate}}</ion-text
+                 >
+                 <ion-text 
+                   color="warning"
+                   *ngIf="transaction.status === 'PENDING'"
+                   >{{"PAGE_SHOPKEEPER_TRANSACTION_PENDING_LABEL" | translate}}</ion-text
+                 >
+                 <ion-text 
+                   color="danger"
+                   *ngIf="transaction.status === 'CANCELED'"
+                   >{{"PAGE_SHOPKEEPER_TRANSACTION_REJECTED_LABEL" | translate}}</ion-text
+                 >
+                 <ion-text
+                   color="danger"
+                   *ngIf="transaction.status === 'REJECTED'"
+                   >{{"PAGE_SHOPKEEPER_TRANSACTION_REJECTED_LABEL" | translate}}</ion-text
+                 >
+               </sub>
+             </p>
+           </ion-label>
+           <!-- <div class="shop-color" slot="end" class="ion-text-right">
+             <div class="shop-color" [style.background]="transaction.shopColor"></div>
+           </div> -->
+         </ion-item>
+      
+     
+    </ion-list>
+    <ion-list *ngSwitchCase="'credit'">
+      <p
+        class="ion-padding"
+        *ngIf="creditTransactions && creditTransactions.length === 0"
+      >
+      {{'PAGE_USER_TRANSACTION_NO_TRANSACTIONS' | translate}}
+      </p>
+      <ion-item [style.border-right-color]="transaction.shopColor" *ngFor="let transaction of creditTransactions"  (click)="viewTransactionDetails(transaction.id)" >
+        <ion-avatar >
+          <ion-icon
+            ios="add-circle-outline"
+            md="add-circle"
+            color="success"
+            *ngIf="transaction.type === 'credit'"
+          ></ion-icon>
+          <ion-icon
+            ios="remove-circle-outline"
+            md="remove-circle"
+            color="danger"
+            *ngIf="transaction.type === 'debit'"
+          ></ion-icon>
+        </ion-avatar>
+        <ion-avatar >
+          <ion-text   color="primary">{{transaction.amount}} </ion-text>
+        </ion-avatar>
+        <ion-label>
+          <!-- <h4>
+            <ion-text color="primary" class="ion-text-capitalize"
+              >{{transaction.type}}</ion-text
+            >
+          </h4> -->
+          <p *ngIf="transaction.description=='Buy'">{{"PAGE_TRANSACTION_BOTTLE_BUY" | translate}}</p>
+          <p *ngIf="transaction.description=='Bottle Refill'">{{"PAGE_TRANSACTION_BOTTLE_REFILL" | translate}}</p>
+          <p *ngIf="transaction.description=='Fund Transfer'">{{"PAGE_TRANSACTION_FUNDS_TRANSFER" | translate}}</p>
+          <p *ngIf="transaction.description=='Bottle Registeration'">{{"PAGE_TRANSACTION_BOTTLE_REGISTERATION" | translate}}</p>
+          <p *ngIf="transaction.description=='Shop Creation'">{{"PAGE_TRANSACTION_SHOP_CREATION" | translate}}</p>
+          <p *ngIf="transaction.description=='Invitee'">{{"PAGE_TRANSACTION_INVITEE_BONUS_CREDIT" | translate}}</p>
+          <p *ngIf="transaction.description=='Invited'">{{"PAGE_TRANSACTION_INVITED_BONUS_CREDIT" | translate}}</p>
+          <p *ngIf="transaction.description=='Profile Completion Phone'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_PHONE" | translate}}</p>
+          <p *ngIf="transaction.description=='Profile Completion Address'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_ADDRESS" | translate}}</p>
+          <p *ngIf="transaction.description=='Profile Completion Date of Birth'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_DOB" | translate}}</p>
+          <p *ngIf="transaction.description=='Profile Completion Last Name'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_LAST_NAME" | translate}}</p>
+          <p *ngIf="transaction.description=='Profile Completion First Name'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_FIRST_NAME" | translate}}</p>
+          <p *ngIf="transaction.shopName!=null">{{transaction.shopName}}</p>
+          <p>
+            <sub>
+              <ion-text
+                color="success"
+                *ngIf="transaction.status === transactionStatus.COMPLETE"
+                >{{"PAGE_SHOPKEEPER_TRANSACTION_COMPELETED_LABEL" | translate}}</ion-text
+              >
+              <ion-text 
+                color="warning"
+                *ngIf="transaction.status === transactionStatus.PENDING"
+                >{{"PAGE_SHOPKEEPER_TRANSACTION_PENDING_LABEL" | translate}}</ion-text
+              >
+              <ion-text 
+                color="danger"
+                *ngIf="transaction.status === transactionStatus.CANCELED"
+                >{{"PAGE_SHOPKEEPER_TRANSACTION_REJECTED_LABEL" | translate}}</ion-text
+              >
+              <ion-text
+                color="danger"
+                *ngIf="transaction.status === transactionStatus.REJECTED"
+                >{{"PAGE_SHOPKEEPER_TRANSACTION_REJECTED_LABEL" | translate}}</ion-text
+              >
+            </sub>
+          </p>
+        </ion-label>
+        <!-- <div class="shop-color" slot="end" class="ion-text-right">
+          <div class="shop-color" [style.background]="transaction.shopColor"></div>
+        </div> -->
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'debit'">
+      <p
+        class="ion-padding"
+        *ngIf="debitTransactions && debitTransactions.length === 0"
+      >
+      {{'PAGE_USER_TRANSACTION_NO_TRANSACTIONS' | translate}}
+      </p>
+      <ion-item [style.border-right-color]="transaction.shopColor" *ngFor="let transaction of debitTransactions" (click)="viewTransactionDetails(transaction.id)" >
+        <ion-avatar >
+          <ion-icon
+            ios="add-circle-outline"
+            md="add-circle"
+            color="success"
+            *ngIf="transaction.type === 'credit'"
+          ></ion-icon>
+          <ion-icon
+            ios="remove-circle-outline"
+            md="remove-circle"
+            color="danger"
+            *ngIf="transaction.type === 'debit'"
+          ></ion-icon>
+        </ion-avatar>
+        <ion-avatar >
+          <ion-text   color="primary">{{transaction.amount}} </ion-text>
+        </ion-avatar>
+        <ion-label>
+          <!-- <h4>
+            <ion-text color="primary" class="ion-text-capitalize"
+              >{{transaction.type}}</ion-text
+            >
+          </h4> -->
+          <p *ngIf="transaction.description=='Buy'">{{"PAGE_TRANSACTION_BOTTLE_BUY" | translate}}</p>
+          <p *ngIf="transaction.description=='Bottle Refill'">{{"PAGE_TRANSACTION_BOTTLE_REFILL" | translate}}</p>
+          <p *ngIf="transaction.description=='Fund Transfer'">{{"PAGE_TRANSACTION_FUNDS_TRANSFER" | translate}}</p>
+          <p *ngIf="transaction.description=='Bottle Registeration'">{{"PAGE_TRANSACTION_BOTTLE_REGISTERATION" | translate}}</p>
+          <p *ngIf="transaction.description=='Shop Creation'">{{"PAGE_TRANSACTION_SHOP_CREATION" | translate}}</p>
+          <p *ngIf="transaction.description=='Invitee'">{{"PAGE_TRANSACTION_INVITEE_BONUS_CREDIT" | translate}}</p>
+          <p *ngIf="transaction.description=='Invited'">{{"PAGE_TRANSACTION_INVITED_BONUS_CREDIT" | translate}}</p>
+          <p *ngIf="transaction.description=='Profile Completion Phone'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_PHONE" | translate}}</p>
+          <p *ngIf="transaction.description=='Profile Completion Address'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_ADDRESS" | translate}}</p>
+          <p *ngIf="transaction.description=='Profile Completion Date of Birth'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_DOB" | translate}}</p>
+          <p *ngIf="transaction.description=='Profile Completion Last Name'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_LAST_NAME" | translate}}</p>
+          <p *ngIf="transaction.description=='Profile Completion First Name'">{{"PAGE_TRANSACTION_PROFILE_COMPLETION_FIRST_NAME" | translate}}</p>
+          <p *ngIf="transaction.shopName!=null">{{transaction.shopName}}</p>
+          <p>
+            <sub>
+              <ion-text
+                color="success"
+                *ngIf="transaction.status === transactionStatus.COMPLETE"
+                >{{"PAGE_SHOPKEEPER_TRANSACTION_COMPELETED_LABEL" | translate}}</ion-text
+              >
+              <ion-text 
+                color="warning"
+                *ngIf="transaction.status === transactionStatus.PENDING"
+                >{{"PAGE_SHOPKEEPER_TRANSACTION_PENDING_LABEL" | translate}}</ion-text
+              >
+              <ion-text 
+                color="danger"
+                *ngIf="transaction.status === transactionStatus.CANCELED"
+                >{{"PAGE_SHOPKEEPER_TRANSACTION_REJECTED_LABEL" | translate}}</ion-text
+              >
+              <ion-text
+                color="danger"
+                *ngIf="transaction.status === transactionStatus.REJECTED"
+                >{{"PAGE_SHOPKEEPER_TRANSACTION_REJECTED_LABEL" | translate}}</ion-text
+              >
+            </sub>
+          </p>
+        </ion-label>
+        <!-- <div>{{ transactionData.shopColor }}</div> -->
+        <!-- <div class="shop-color" slot="end" class="ion-text-right">
+          <div class="shop-color" [style.background]="transaction.shopColor"></div>
+        </div> -->
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'refill'">
+      <p
+        class="ion-padding"
+        *ngIf="refillTransactions && refillTransactions.length === 0"
+      >
+      {{'PAGE_USER_HOME_NO_REFILLS_LABEL' | translate}}
+      </p>
+      <ion-item [style.border-right-color]="transaction.shopColor" lines="none" *ngFor="let transaction of refillTransactions" (click)="viewTransactionDetails(transaction.id)">
+        <ion-avatar >
+          <ion-img
+            [src]="transaction.shopkeeperDisplayPhoto"
+            *ngIf="transaction.shopkeeperDisplayPhoto"
+          ></ion-img>
+          <img
+            src="/assets/img/profile-image-placeholder.png"
+            alt="Photo"
+            *ngIf="!transaction.shopkeeperDisplayPhoto"
+          />
+        </ion-avatar>
+        <ion-avatar >
+          <ion-text   color="primary">{{transaction.amount}} </ion-text>
+        </ion-avatar>
+        <ion-label>
+          <h4>
+            <ion-text color="primary" class="ion-text-capitalize"
+              >{{transaction.shopName}}</ion-text
+            >
+          </h4>
+          <p *ngIf="transaction.shopkeeperDisplayName">
+            {{transaction.shopkeeperDisplayName}}
+          </p>
+          <p *ngIf="!transaction.shopkeeperDisplayName">{{"PAGE_USER_PROFILE_FULL_NAME_LABEL" | translate}}</p>
+        </ion-label>
+        <ion-label slot="end" class="ion-text-center">
+          <h3>{{transaction.amount}} LiCoin</h3>
+          <!-- <h3>{{transaction.shopId}}</h3> -->
+          <ion-button expand="block" (click)="getDirections($event,transaction.shopId)"
+            >{{"PAGE_SHOPKEEPER_HOME_DIRECTIONS_BUTTON" | translate}}</ion-button
+          >
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <ion-fab horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/user-tabs/transactions/add']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</div>
+<!-- <div class=" ion-text-center"  *ngIf="!emailVerified">
+  <h3 class="ion-margin ion-text-start">{{"PAGE_TRANSACTION_VERIFICATION_REQUIRED" | translate}}</h3>
+  <ion-button (click)="email()"> Open Mail</ion-button>
+  <app-anti-flood></app-anti-flood>
+</div> -->
+</ion-content>

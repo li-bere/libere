@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Shop</ion-title>
+    <ion-buttons slot="end">
+      <app-spinner *ngIf="loading"></app-spinner>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="ion-margin-bottom">
+    <ion-card-header>
+      <ion-card-title class="title">Edit Shop</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <ion-list lines="full" class="ion-no-margin ion-no-padding">
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="pricetags-outline"
+              md="pricetags"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              type="text"
+              placeholder="Shop Name"
+              formControlName="name"
+            ></ion-input>
+          </ion-item>
+
+          <div *ngIf="name.invalid && (name.touched)" class="ion-text-start">
+            <ion-text color="danger" *ngIf="name.errors.required">
+              <p><sub>Shop name is required.</sub></p>
+            </ion-text>
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-icon
+              ios="call-outline"
+              md="call"
+              slot="start"
+              color="primary"
+              class="ion-align-self-center"
+            ></ion-icon>
+            <ion-input
+              required
+              type="text"
+              placeholder="Phone"
+              formControlName="phone"
+            ></ion-input>
+          </ion-item>
+
+          <div *ngIf="phone.invalid && (phone.touched)" class="ion-text-start">
+            <ion-text color="danger" *ngIf="phone.errors.required">
+              <p><sub>Phone is required.</sub></p>
+            </ion-text>
+          </div>
+
+          <app-location [form]="form" [address]="address"> </app-location>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-label>Is this shop also a fountain?</ion-label>
+            <ion-checkbox
+              slot="end"
+              formControlName="isFountain"
+            ></ion-checkbox>
+          </ion-item>
+
+          <ion-button
+            fill="solid"
+            expand="block"
+            type="submit"
+            class="ion-margin-bottom"
+            [disabled]="form.invalid"
+          >
+            Update
+          </ion-button>
+        </ion-list>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

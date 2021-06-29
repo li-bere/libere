@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button color="light" fill="clear" (click)="back()">
+        <ion-icon ios="arrow-back-outline" md="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{"MAP_SELECT_LOCATION" | translate}}</ion-title>
+   
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    placeholder="{{'MAP_SEARCH_PLACE' | translate}}"
+    autocorrect="off"
+    [(ngModel)]="autoCompleteOptions.input"
+    #search="ngModel"
+    (ionInput)="updateSearchResults()"
+  >
+  </ion-searchbar>
+
+  <ion-list
+    *ngIf="autoCompleteOptions.input && autoCompleteItems && autoCompleteItems.length > 0"
+  >
+    <ion-item
+      *ngFor="let item of autoCompleteItems"
+      (click)="selectSearchResult(item)"
+    >
+      {{ item.description }}
+    </ion-item>
+  </ion-list>
+
+  <div #map id="map" class="map"></div>
+</ion-content>
+
+<ion-footer>
+<div class='btn'>
+  <ion-button 
+  (click)="finalLocation()"
+  [disabled]="disableLocationSavebtn"
+  expand="block"
+>
+{{"MAP_SAVE_LOCATION" | translate}}
+</ion-button>
+</div>
+</ion-footer>
